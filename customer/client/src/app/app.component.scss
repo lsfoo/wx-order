@@ -1,8 +1,11 @@
 .toolbar {
-  width: 100%;
-  text-align: right;
+   clear: both;
+    display: block;
+    text-align: center;	
+    margin: 0px auto;
+    position: fixed;
+    bottom: 100px;
+}
+div{
   border: 1px solid blue;
-  position: fixed;
-  bottom: 2em;
-
 }

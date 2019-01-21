@@ -47,3 +47,6 @@ angular.json
 ### font-awesome 图标
 
 npm install font-awesome -save
+
+### holderjs
+npm install holderjs
