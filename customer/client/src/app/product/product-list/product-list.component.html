@@ -1,0 +1,202 @@
+<!--头部 start-->
+<nav class="navbar navbar-expand navbar-light bg-light fixed-top" #topbar>
+  <div class="nav navbar-nav">
+    <a class="nav-item nav-link" href="#">Home</a>
+    <a class="nav-item nav-link" href="#">Home</a>
+    <a class="nav-item nav-link" href="#">Home</a>
+  </div>
+</nav>
+
+<!--头部 end-->
+
+
+
+<div #main>
+  <table class="table">
+    <tbody>
+      <tr>
+        <td class="border-right">
+          <a [routerLink]="[ '/product/details', 1 ]">
+            <img src="http://placehold.it/120x120/" style="width:100%" class="rounded mx-auto d-block" alt="...">
+          </a>
+          <div class="float-left">
+            <small class="text-secondary">月销 20</small>
+            <h5 class="text-danger"><i class="fa fa-jpy" aria-hidden="true"></i>10</h5>
+          </div>
+          <div class="float-right">
+            <i class="fa fa-plus-circle  text-warning mt-3" style="font-size: 1.5rem;" aria-hidden="true"></i>
+          </div>
+        </td>
+        <td>
+          <img src="http://placehold.it/120x120/" style="width:100%" class="rounded mx-auto d-block" alt="...">
+          <div class="float-left">
+            <small>月销 20</small>
+            <h5 class="text-danger"><i class="fa fa-jpy" aria-hidden="true"></i>10</h5>
+          </div>
+          <div class="float-right">
+            <i class="fa fa-plus-circle  text-warning mt-3" style="font-size: 1.5rem;" aria-hidden="true"></i>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="border-right">
+          <img src="http://placehold.it/120x120/" style="width:100%" class="rounded mx-auto d-block" alt="...">
+          <div class="float-left">
+            <small class="text-secondary">月销 20</small>
+            <h5 class="text-danger"><i class="fa fa-jpy" aria-hidden="true"></i>10</h5>
+          </div>
+          <div class="float-right">
+            <i class="fa fa-plus-circle  text-warning mt-3" style="font-size: 1.5rem;" aria-hidden="true"></i>
+          </div>
+        </td>
+        <td>
+          <img src="http://placehold.it/120x120/" style="width:100%" class="rounded mx-auto d-block" alt="...">
+          <div class="float-left">
+            <small>月销 20</small>
+            <h5 class="text-danger"><i class="fa fa-jpy" aria-hidden="true"></i>10</h5>
+          </div>
+          <div class="float-right">
+            <i class="fa fa-plus-circle  text-warning mt-3" style="font-size: 1.5rem;" aria-hidden="true"></i>
+          </div>
+        </td>
+      </tr>
+      <tr>
+        <td class="border-right">
+          <img src="http://placehold.it/120x120/" style="width:100%" class="rounded mx-auto d-block" alt="...">
+          <div class="float-left">
+            <small class="text-secondary">月销 20</small>
+            <h5 class="text-danger"><i class="fa fa-jpy" aria-hidden="true"></i>10</h5>
+          </div>
+          <div class="float-right">
+            <i class="fa fa-plus-circle  text-warning mt-3" style="font-size: 1.5rem;" aria-hidden="true"></i>
+          </div>
+        </td>
+        <td>
+          <img src="http://placehold.it/120x120/" style="width:100%" class="rounded mx-auto d-block" alt="...">
+          <div class="float-left">
+            <small>月销 20</small>
+            <h5 class="text-danger"><i class="fa fa-jpy" aria-hidden="true"></i>10</h5>
+          </div>
+          <div class="float-right">
+            <i class="fa fa-plus-circle  text-warning mt-3" style="font-size: 1.5rem;" aria-hidden="true"></i>
+          </div>
+        </td>
+      </tr>
+      <tr>
+
+        <td class="border-right">
+          <img src="http://placehold.it/120x120/" style="width:100%" class="rounded mx-auto d-block" alt="...">
+          <div class="float-left">
+            <small class="text-secondary">月销 20</small>
+            <h5 class="text-danger"><i class="fa fa-jpy" aria-hidden="true"></i>10</h5>
+          </div>
+          <div class="float-right">
+            <i class="fa fa-plus-circle  text-warning mt-3" style="font-size: 1.5rem;" aria-hidden="true"></i>
+          </div>
+        </td>
+        <td>
+          <img src="http://placehold.it/120x120/" style="width:100%" class="rounded mx-auto d-block" alt="...">
+          <div class="float-left">
+            <small>月销 20</small>
+            <h5 class="text-danger"><i class="fa fa-jpy" aria-hidden="true"></i>10</h5>
+          </div>
+          <div class="float-right">
+            <i class="fa fa-plus-circle  text-warning mt-3" style="font-size: 1.5rem;" aria-hidden="true"></i>
+
+          </div>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+
+</div>
+
+<div class="fixed-bottom text-center bg-light">
+
+  <button [routerLink]="[ '/cart/details']" type="button" class="btn btn-md btn-outline-primary m-2">下单</button>
+
+
+  <!-- Button trigger modal -->
+  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
+    Launch demo modal
+  </button>
+
+
+
+</div>
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
+  aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="" style="height:400px;overflow-y:auto">
+        <table class="table">
+          <tbody>
+            <tr>
+              <td scope="row">
+                <h4 class="m-0"> kjfdslja </h4><small>(ddd)</small>
+              </td>
+              <td> <i class="fa fa-jpy" aria-hidden="true"></i>13</td>
+              <td> <i class="fa fa-minus" aria-hidden="true"></i> 1 <i class="fa fa-plus" aria-hidden="true"></i></td>
+            </tr>
+            <tr>
+              <td scope="row">
+                <h4 class="m-0"> kjfdslja </h4><small>(ddd)</small>
+              </td>
+              <td> <i class="fa fa-jpy" aria-hidden="true"></i>13</td>
+              <td> <i class="fa fa-minus" aria-hidden="true"></i> 1 <i class="fa fa-plus" aria-hidden="true"></i></td>
+            </tr>
+            <tr>
+              <td scope="row">
+                <h4 class="m-0"> kjfdslja </h4><small>(ddd)</small>
+              </td>
+              <td> <i class="fa fa-jpy" aria-hidden="true"></i>13</td>
+              <td> <i class="fa fa-minus" aria-hidden="true"></i> 1 <i class="fa fa-plus" aria-hidden="true"></i></td>
+            </tr>
+            <tr>
+              <td scope="row">
+                <h4 class="m-0"> kjfdslja </h4><small>(ddd)</small>
+              </td>
+              <td> <i class="fa fa-jpy" aria-hidden="true"></i>13</td>
+              <td> <i class="fa fa-minus" aria-hidden="true"></i> 1 <i class="fa fa-plus" aria-hidden="true"></i></td>
+            </tr>
+            <tr>
+              <td scope="row">
+                <h4 class="m-0"> kjfdslja </h4><small>(ddd)</small>
+              </td>
+              <td> <i class="fa fa-jpy" aria-hidden="true"></i>13</td>
+              <td> <i class="fa fa-minus" aria-hidden="true"></i> 1 <i class="fa fa-plus" aria-hidden="true"></i></td>
+            </tr>
+            <tr>
+              <td scope="row">
+                <h4 class="m-0"> kjfdslja </h4><small>(ddd)</small>
+              </td>
+              <td> <i class="fa fa-jpy" aria-hidden="true"></i>13</td>
+              <td> <i class="fa fa-minus" aria-hidden="true"></i> 1 <i class="fa fa-plus" aria-hidden="true"></i></td>
+            </tr>
+            <tr>
+              <td scope="row">
+                <h4 class="m-0"> kjfdslja </h4><small>(ddd)</small>
+              </td>
+              <td> <i class="fa fa-jpy" aria-hidden="true"></i>13</td>
+              <td> <i class="fa fa-minus" aria-hidden="true"></i> 1 <i class="fa fa-plus" aria-hidden="true"></i></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
