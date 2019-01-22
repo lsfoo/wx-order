@@ -39,9 +39,13 @@ npm install popper --save
 angular.json
 
 "scripts": [
+
 "./node_modules/jquery/dist/jquery.js",
+
 "./node_modules/popper.js/dist/umd/popper.js",
+
 "./node_modules/bootstrap/dist/js/bootstrap.js"
+
 ]
 
 ### font-awesome 图标
@@ -49,4 +53,25 @@ angular.json
 npm install font-awesome -save
 
 ### holderjs
+
 npm install holderjs
+
+angular.json
+
+```
+"scripts": [
+
+"./node_modules/jquery/dist/jquery.js",
+
+"./node_modules/popper.js/dist/umd/popper.js",
+
+"./node_modules/bootstrap/dist/js/bootstrap.js",
+
+"./node_modules/holderjs/holder.min.js"
+
+]
+```
+
+### 不一定用
+
+npm install ngx-bootstrap --save
