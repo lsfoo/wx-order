@@ -3,3 +3,9 @@ $fa-font-path: '../node_modules/font-awesome/fonts';
 @import '../node_modules/font-awesome/scss/font-awesome.scss';
 
 @import '../node_modules/bootstrap/scss/bootstrap';
+
+* {
+     -webkit-border-radius: 0 !important;
+     -moz-border-radius: 0 !important;
+     border-radius: 0 !important;
+ }

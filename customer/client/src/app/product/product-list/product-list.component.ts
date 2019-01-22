@@ -16,6 +16,10 @@ export class ProductListComponent implements OnInit {
   topbarHeight: number
   @ViewChild('main') mainel: ElementRef
 
+  @ViewChild('app') appel: ElementRef
+  @ViewChild('cartlist') cartlistel: ElementRef
+  appHeight: number
+
   constructor(private renderer: Renderer2) {}
 
   ngOnInit() {
@@ -26,5 +30,11 @@ export class ProductListComponent implements OnInit {
       'padding-top',
       this.topbarHeight + 'px'
     )
+
+    this.appHeight = this.appel.nativeElement.clientHeight;
+    this.renderer.setStyle(this.cartlistel.nativeElement,'height',this.appHeight/3+'px')
+    console.log(this.appHeight)
+
+
   }
 }
