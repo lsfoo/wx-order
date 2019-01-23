@@ -54,6 +54,8 @@ npm install font-awesome -save
 
 ### holderjs
 
+> 不好用 换成这个 http://placehold.it/120x120/
+
 npm install holderjs
 
 angular.json
