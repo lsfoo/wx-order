@@ -17,7 +17,8 @@ import {
   MatChipsModule,
   MatListModule,
   MatBottomSheetModule,
-  MatTabsModule
+  MatTabsModule,
+  MatExpansionModule
 } from '@angular/material'
 @NgModule({
   declarations: [ProductListComponent, ProductDetailsComponent],
@@ -33,7 +34,9 @@ import {
     MatChipsModule,
     MatListModule,
     MatBottomSheetModule,
-    MatTabsModule
+    MatTabsModule,
+
+  MatExpansionModule
   ]
 })
 export class ProductModule {}

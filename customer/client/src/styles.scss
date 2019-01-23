@@ -2,7 +2,7 @@
 $fa-font-path: '../node_modules/font-awesome/fonts';
 @import '../node_modules/font-awesome/scss/font-awesome.scss';
 
-//@import '../node_modules/bootstrap/scss/bootstrap';
+@import '../node_modules/bootstrap/scss/bootstrap';
 
 
 @import "~@angular/material/prebuilt-themes/indigo-pink.css";
@@ -10,12 +10,4 @@ $fa-font-path: '../node_modules/font-awesome/fonts';
 //@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 //@import "~@angular/material/prebuilt-themes/purple-green.css";
 
-html,
-body {
-  height: 100%;
-}
 
-body {
-  margin: 0;
-  font-family: Roboto, "Helvetica Neue", sans-serif;
-}

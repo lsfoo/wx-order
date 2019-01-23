@@ -1,267 +1,172 @@
 <div #app>
   <!--头部 start-->
-  <div #topbar fxLayout="row" class="topbar" fxLayoutAlign="end center">
-    <button mat-button>热卖</button>
-    <button mat-button>套餐</button>
+  <ul class="nav nav-pills topbar border-bottom" #topbar >
 
-    <button mat-button [matMenuTriggerFor]="menu">分类</button>
-    <mat-menu #menu="matMenu">
-      <button mat-menu-item>Item 1</button>
-      <button mat-menu-item>Item 2</button>
-    </mat-menu>
+    <li class="nav-item">
+      <a href="#" class="nav-link">热销</a>
+    </li>
+
+    <li class="nav-item dropdown">
+      <a class="nav-link dropdown-toggle"
+       data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">分类</a>
+      <div class="dropdown-menu">
+        <a class="dropdown-item" href="#">Action</a>
+        <a class="dropdown-item" href="#">Another action</a>
+        <div class="dropdown-divider"></div>
+        <a class="dropdown-item" href="#">Action</a>
+      </div>
+    </li>
+  </ul>
+  
+  <!-- Tab panes -->
+  <div class="tab-content">
+    <div class="tab-pane fade show active" id="tab1Id" role="tabpanel"></div>
+    <div class="tab-pane fade" id="tab2Id" role="tabpanel"></div>
+    <div class="tab-pane fade" id="tab3Id" role="tabpanel"></div>
+    <div class="tab-pane fade" id="tab4Id" role="tabpanel"></div>
+    <div class="tab-pane fade" id="tab5Id" role="tabpanel"></div>
   </div>
+  
+  <script>
+    $('#navId a').click(e => {
+      e.preventDefault();
+      $(this).tab('show');
+    });
+  </script>
 
 
 
   <!--头部 end-->
-
-  <div #main class="main">
-    <div fxLayout="row" fxLayoutAlign="start center" fxLayoutGap="gappx" class="main-header">
-      <div fxFlex="40%" fxFlexAlign="start" style="padding-left:1rem">
-        <h3>热卖</h3>
-
-      </div>
-
-    </div>
-    <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
-      <mat-tab-group>
-        <mat-tab label="TabHeader1"></mat-tab>
-        <mat-tab label="TabTabHeader2"></mat-tab>
-      </mat-tab-group>
-
-    </div>
-
-    <div fxLayout="row warp" fxLayoutAlign="start start" fxLayoutGap="gappx" class="main-items">
-      <div fxFlex="50%" class="main-item">
-        <mat-card>
-          <mat-card-header>
-            <mat-card-title>title</mat-card-title>
-            <mat-card-subtitle>subtitle</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-
-          </mat-card-content>
-          <mat-card-actions>
-            <button mat-button>加入</button>
-          </mat-card-actions>
-        </mat-card>
-
-      </div>
-
-      <div fxFlex="50%" class="main-item">
-        <mat-card>
-          <mat-card-header>
-            <mat-card-title>title</mat-card-title>
-            <mat-card-subtitle>subtitle</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-
-          </mat-card-content>
-          <mat-card-actions>
-            <button mat-button>Ok</button>
-          </mat-card-actions>
-        </mat-card>
-
-      </div>
-
-
-      <div fxFlex="50%" class="main-item">
-        <mat-card>
-          <mat-card-header>
-            <mat-card-title>title</mat-card-title>
-            <mat-card-subtitle>subtitle</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-
-          </mat-card-content>
-          <mat-card-actions>
-            <button mat-button>Ok</button>
-          </mat-card-actions>
-        </mat-card>
-
-      </div>
-
-      <div fxFlex="50%" class="main-item">
-        <mat-card>
-          <mat-card-header>
-            <mat-card-title>title</mat-card-title>
-            <mat-card-subtitle>subtitle</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-
-          </mat-card-content>
-          <mat-card-actions>
-            <button mat-button>Ok</button>
-          </mat-card-actions>
-        </mat-card>
-
-      </div>
-
-
-      <div fxFlex="50%" class="main-item">
-        <mat-card>
-          <mat-card-header>
-            <mat-card-title>title</mat-card-title>
-            <mat-card-subtitle>subtitle</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-
-          </mat-card-content>
-          <mat-card-actions>
-            <button mat-button>Ok</button>
-          </mat-card-actions>
-        </mat-card>
-
-      </div>
-
-
-      <div fxFlex="50%" class="main-item">
-        <mat-card>
-          <mat-card-header>
-            <mat-card-title>title</mat-card-title>
-            <mat-card-subtitle>subtitle</mat-card-subtitle>
-          </mat-card-header>
-          <mat-card-content>
-
-          </mat-card-content>
-          <mat-card-actions>
-            <button mat-button>Ok</button>
-          </mat-card-actions>
-        </mat-card>
-
-      </div>
-
-
-    </div>
-
-
-
+  
+  <div fxLayout="row warp" class="main" #main fxLayoutAlign="start start" fxLayoutGap="gappx">
     <table class="table">
       <tbody>
+      <tr>
+          <td class="border-right">
+            <a [routerLink]="[ '/product/details', 1 ]">
+              <img src="http://placehold.it/120x120/" style="width:100%" class="rounded mx-auto d-block" alt="...">
+            </a>
+            <div class="float-left" style="line-height:18px">
+              <small class="text-secondary">月销 20</small>
+              <br>
+              <small class="text-secondary">库存 20</small>
+              <br>
+              <small class="text-danger"><i class="fa fa-jpy pr-1" aria-hidden="true"></i>10</small>
+            </div>
+            <div class="float-right">
+              <i class="fa fa-plus-circle text-warning mt-2" style="font-size:1.3rem" aria-hidden="true"></i>
+            </div>
+          </td>
+  
+          <td class="border-right">
+            <a [routerLink]="[ '/product/details', 1 ]">
+              <img src="http://placehold.it/120x120/" style="width:100%" class="rounded mx-auto d-block" alt="...">
+            </a>
+            <div class="float-left" style="line-height:18px">
+              <small class="text-secondary">月销 20</small>
+              <br>
+              <small class="text-secondary">库存 20</small>
+              <br>
+              <small class="text-danger"><i class="fa fa-jpy pr-1" aria-hidden="true"></i>10</small>
+            </div>
+            <div class="float-right">
+              <span class="badge badge-pill badge-warning text-light mt-2">规格</span>
+            </div>
+          </td>
+        </tr>
+      <tr>
+          <td class="border-right">
+            <a [routerLink]="[ '/product/details', 1 ]">
+              <img src="http://placehold.it/120x120/" style="width:100%" class="rounded mx-auto d-block" alt="...">
+            </a>
+            <div class="float-left" style="line-height:18px">
+              <small class="text-secondary">月销 20</small>
+              <br>
+              <small class="text-secondary">库存 20</small>
+              <br>
+              <small class="text-danger"><i class="fa fa-jpy pr-1" aria-hidden="true"></i>10</small>
+            </div>
+            <div class="float-right">
+              <i class="fa fa-plus-circle text-warning mt-2" style="font-size:1.3rem" aria-hidden="true"></i>
+            </div>
+          </td>
+  
+          <td class="border-right">
+            <a [routerLink]="[ '/product/details', 1 ]">
+              <img src="http://placehold.it/120x120/" style="width:100%" class="rounded mx-auto d-block" alt="...">
+            </a>
+            <div class="float-left" style="line-height:18px">
+              <small class="text-secondary">月销 20</small>
+              <br>
+              <small class="text-secondary">库存 20</small>
+              <br>
+              <small class="text-danger"><i class="fa fa-jpy pr-1" aria-hidden="true"></i>10</small>
+            </div>
+            <div class="float-right">
+              <i class="fa fa-plus-circle text-warning mt-2" style="font-size:1.3rem" aria-hidden="true"></i>
+            </div>
+          </td>
+        </tr>
         <tr>
           <td class="border-right">
             <a [routerLink]="[ '/product/details', 1 ]">
               <img src="http://placehold.it/120x120/" style="width:100%" class="rounded mx-auto d-block" alt="...">
             </a>
-            <div class="float-left">
+            <div class="float-left" style="line-height:18px">
               <small class="text-secondary">月销 20</small>
-              <h5 class="text-danger"><i class="fa fa-jpy" aria-hidden="true"></i>10</h5>
+              <br>
+              <small class="text-secondary">库存 20</small>
+              <br>
+              <small class="text-danger"><i class="fa fa-jpy pr-1" aria-hidden="true"></i>10</small>
             </div>
             <div class="float-right">
-              <i class="fa fa-plus-square-o text-warning mt-2" style="font-size:1.5rem" aria-hidden="true"></i>
+              <i class="fa fa-plus-circle text-warning mt-2" style="font-size:1.3rem" aria-hidden="true"></i>
             </div>
           </td>
-          <td>
-            <img src="http://placehold.it/120x120/" style="width:100%" class="rounded mx-auto d-block" alt="...">
-            <div class="float-left">
-              <small>月销 20</small>
-              <h5 class="text-danger"><i class="fa fa-jpy" aria-hidden="true"></i>10</h5>
-            </div>
-            <div class="float-right">
-              <a class="badge badge-pill badge-warning p-1 mt-2">规格</a>
-            </div>
-          </td>
-        </tr>
-        <tr>
+  
           <td class="border-right">
-            <img src="http://placehold.it/120x120/" style="width:100%" class="rounded mx-auto d-block" alt="...">
-            <div class="float-left">
+            <a [routerLink]="[ '/product/details', 1 ]">
+              <img src="http://placehold.it/120x120/" style="width:100%" class="rounded mx-auto d-block" alt="...">
+            </a>
+            <div class="float-left" style="line-height:18px">
               <small class="text-secondary">月销 20</small>
-              <h5 class="text-danger"><i class="fa fa-jpy" aria-hidden="true"></i>10</h5>
+              <br>
+              <small class="text-secondary">库存 20</small>
+              <br>
+              <small class="text-danger"><i class="fa fa-jpy pr-1" aria-hidden="true"></i>10</small>
             </div>
             <div class="float-right">
-              <i class="fa fa-plus-circle  text-warning mt-3" style="font-size: 1.5rem;" aria-hidden="true"></i>
-            </div>
-          </td>
-          <td>
-            <img src="http://placehold.it/120x120/" style="width:100%" class="rounded mx-auto d-block" alt="...">
-            <div class="float-left">
-              <small>月销 20</small>
-              <h5 class="text-danger"><i class="fa fa-jpy" aria-hidden="true"></i>10</h5>
-            </div>
-            <div class="float-right">
-              <i class="fa fa-plus-circle  text-warning mt-3" style="font-size: 1.5rem;" aria-hidden="true"></i>
+              <i class="fa fa-plus-circle text-warning mt-2" style="font-size:1.3rem" aria-hidden="true"></i>
             </div>
           </td>
         </tr>
-        <tr>
-          <td class="border-right">
-            <img src="http://placehold.it/120x120/" style="width:100%" class="rounded mx-auto d-block" alt="...">
-            <div class="float-left">
-              <small class="text-secondary">月销 20</small>
-              <h5 class="text-danger"><i class="fa fa-jpy" aria-hidden="true"></i>10</h5>
-            </div>
-            <div class="float-right">
-              <i class="fa fa-plus-circle  text-warning mt-3" style="font-size: 1.5rem;" aria-hidden="true"></i>
-            </div>
-          </td>
-          <td>
-            <img src="http://placehold.it/120x120/" style="width:100%" class="rounded mx-auto d-block" alt="...">
-            <div class="float-left">
-              <small>月销 20</small>
-              <h5 class="text-danger"><i class="fa fa-jpy" aria-hidden="true"></i>10</h5>
-            </div>
-            <div class="float-right">
-              <i class="fa fa-plus-circle  text-warning mt-3" style="font-size: 1.5rem;" aria-hidden="true"></i>
-            </div>
-          </td>
-        </tr>
-        <tr>
-
-          <td class="border-right">
-            <img src="http://placehold.it/120x120/" style="width:100%" class="rounded mx-auto d-block" alt="...">
-            <div class="float-left">
-              <small class="text-secondary">月销 20</small>
-              <h5 class="text-danger"><i class="fa fa-jpy" aria-hidden="true"></i>10</h5>
-            </div>
-            <div class="float-right">
-              <i class="fa fa-plus-circle  text-warning mt-3" style="font-size: 1.5rem;" aria-hidden="true"></i>
-            </div>
-          </td>
-          <td>
-            <img src="http://placehold.it/120x120/" style="width:100%" class="rounded mx-auto d-block" alt="...">
-            <div class="float-left">
-              <small>月销 20</small>
-              <h5 class="text-danger"><i class="fa fa-jpy" aria-hidden="true"></i>10</h5>
-            </div>
-            <div class="float-right">
-              <i class="fa fa-plus-circle  text-warning mt-3" style="font-size: 1.5rem;" aria-hidden="true"></i>
-            </div>
-          </td>
-        </tr>
+  
       </tbody>
     </table>
     <div class="alert alert-secondary mb-5" role="alert">
       <strong>没有更多</strong>
     </div>
-
+  
   </div>
   <div fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="gappx" style="background: rgba(0,0,0,0.4);position:fixed; bottom:0;width:100% ">
-
-
-
     <div class="col-7 text-center">
-      <button mat-fab>kdkd</button>
-
+  
     </div>
     <div class="col-5">
-
-
-      <!-- Button trigger modal -->
       <button type="button" style="width:100%;" class="btn btn-warning float-right" data-toggle="modal" data-target="#exampleModalCenter">
         结账
       </button>
-
+  
     </div>
-
-
-
-
+  
+  
+  
+  
   </div>
-
-
-
-
+  
+  
+  
+  
   <!-- Modal -->
   <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
@@ -298,7 +203,7 @@
                   <i class="fa fa-plus-circle text-warning" aria-hidden="true"></i>
                 </td>
               </tr>
-
+  
               <tr>
                 <td scope="row">
                   <h6 class="m-0">卡布奇诺</h6><small>(加热)</small>
@@ -310,7 +215,7 @@
                   <i class="fa fa-plus-circle text-warning" aria-hidden="true"></i>
                 </td>
               </tr>
-
+  
               <tr>
                 <td scope="row">
                   <h6 class="m-0">卡布奇诺</h6><small>(加热)</small>
@@ -322,7 +227,7 @@
                   <i class="fa fa-plus-circle text-warning" aria-hidden="true"></i>
                 </td>
               </tr>
-
+  
               <tr>
                 <td scope="row">
                   <h6 class="m-0">卡布奇诺</h6><small>(加热)</small>
@@ -334,25 +239,25 @@
                   <i class="fa fa-plus-circle text-warning" aria-hidden="true"></i>
                 </td>
               </tr>
-
+  
             </tbody>
           </table>
         </div>
         <div class="modal-footer text-center p-0">
-
+  
           <div class="btn-group btn-group-xs" role="group" style="width:100%" aria-label="">
             <button type="button" class="btn btn-outline-danger">
               清空</button>
             <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"> 关闭</button>
-
+  
             <button type="button" class="btn btn-outline-info">预定</button>
             <button type="button" class="btn btn-warning">立即支付</button>
-
-
+  
+  
           </div>
         </div>
       </div>
     </div>
   </div>
-
-</div>
+  
+  </div>
