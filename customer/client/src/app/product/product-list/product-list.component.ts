@@ -31,10 +31,12 @@ export class ProductListComponent implements OnInit {
       this.topbarHeight + 'px'
     )
 
-    this.appHeight = this.appel.nativeElement.clientHeight;
-    this.renderer.setStyle(this.cartlistel.nativeElement,'height',this.appHeight/3+'px')
+    this.appHeight = this.appel.nativeElement.clientHeight
+    this.renderer.setStyle(
+      this.cartlistel.nativeElement,
+      'height',
+      this.appHeight / 2 - 100 + 'px'
+    )
     console.log(this.appHeight)
-
-
   }
 }

@@ -29,5 +29,6 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 npm install --save @angular/material @angular/cdk @angular/animations
 
 npm install --save angular/material2-builds angular/cdk-builds angular/animations-builds
+npm install @angular/flex-layout
 
 ng add @angular/material
