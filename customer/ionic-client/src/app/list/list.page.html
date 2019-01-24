@@ -3,16 +3,25 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-    <ion-title class="main-toolbar-title">
-      List
-    </ion-title>
+<ion-slides pager="true" [options]="slideOpts">
+  <ion-slide *ngFor="let item of items">
+    <ion-button href="" routerDirection="" color="primary" fill="clear" size="small" type="submit" expand="block" round
+      strong> {{item.title}} </ion-button>
+  </ion-slide>
+</ion-slides>
   </ion-toolbar>
 </ion-header>
-<div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px" class="product-list">
-  <div fxLayout="row" fxLayoutAlign="start start" *ngFor="let item of items">
-    <img src="{{item.photo}}" alt="" sizes="" srcset="">
-    <div>{{item.title}}</div>
-    <div>{{item.note}}</div>
+
+
+<ion-content>
+
+  <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px" class="product-list">
+    <div fxLayout="row" fxLayoutAlign="start start" *ngFor="let item of items">
+      <img src="{{item.photo}}" alt="" sizes="" srcset="">
+      <div>{{item.title}}</div>
+      <div>{{item.note}}</div>
+    </div>
+
   </div>
 
-</div>
+</ion-content>

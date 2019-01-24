@@ -25,6 +25,8 @@ export class ListPage implements OnInit {
     icon: string
     photo: string
   }> = []
+  slideOpts;
+
   constructor() {
     for (let i = 1; i < 11; i++) {
       this.items.push({
@@ -36,7 +38,20 @@ export class ListPage implements OnInit {
     }
   }
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.slideOpts = {
+      loop: false,
+      autoplay: false,
+      initialSlide: 0,
+      pager: false,
+      slidesPerView: 4,
+      paginationHide: true,
+      paginationClickable: true,
+      scrollbar: false
+    }
+
+  }
+
   // add back when alpha.4 is out
   // navigate(item) {
   //   this.router.navigate(['/list', JSON.stringify(item)]);
