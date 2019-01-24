@@ -8,18 +8,11 @@
     </ion-title>
   </ion-toolbar>
 </ion-header>
-<div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="gappx" class="product-list">
-  <div *ngFor="let item of items">
+<div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px" class="product-list">
+  <div fxLayout="row" fxLayoutAlign="start start" *ngFor="let item of items">
+    <img src="{{item.photo}}" alt="" sizes="" srcset="">
     <div>{{item.title}}</div>
     <div>{{item.note}}</div>
-    <img src="{{item.photo}}" alt="" sizes="" srcset="">
   </div>
 
-
-
-  <!--
-    <div *ngIf="selectedItem" padding>
-      You navigated here from <b>{{selectedItem.title }}</b>
-    </div>
-  -->
 </div>
