@@ -6,6 +6,15 @@ div {}
   width: 100%;
   background: #ffffff;
   z-index: 9999;
+  display: inline;
+  white-space: nowrap;
+  /*规定段落中的文本不进行换行*/
+  overflow-x: scroll;
+  /*水平方向，超出部分添加滚动机制*/
+  float: left;
+  /*一定要设置左侧浮动*/
+  overflow-y: hidden
+    /*竖直方向，超出部分隐藏*/
 }
 
 .main {

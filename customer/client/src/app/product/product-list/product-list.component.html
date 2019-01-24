@@ -1,47 +1,27 @@
 <div #app>
   <!--头部 start-->
-  <ul class="nav nav-pills topbar border-bottom" #topbar >
-
-    <li class="nav-item">
-      <a href="#" class="nav-link">热销</a>
-    </li>
-
-    <li class="nav-item dropdown">
-      <a class="nav-link dropdown-toggle"
-       data-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">分类</a>
-      <div class="dropdown-menu">
-        <a class="dropdown-item" href="#">Action</a>
-        <a class="dropdown-item" href="#">Another action</a>
-        <div class="dropdown-divider"></div>
-        <a class="dropdown-item" href="#">Action</a>
-      </div>
-    </li>
-  </ul>
-  
-  <!-- Tab panes -->
-  <div class="tab-content">
-    <div class="tab-pane fade show active" id="tab1Id" role="tabpanel"></div>
-    <div class="tab-pane fade" id="tab2Id" role="tabpanel"></div>
-    <div class="tab-pane fade" id="tab3Id" role="tabpanel"></div>
-    <div class="tab-pane fade" id="tab4Id" role="tabpanel"></div>
-    <div class="tab-pane fade" id="tab5Id" role="tabpanel"></div>
+  <div fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx" #topbar>
+    <button type="button" class="btn btn-light">text</button>
+    <button type="button" class="btn btn-light">text</button>
+    <button type="button" class="btn btn-light">text</button>
+    <button type="button" class="btn btn-light">text</button>
+    <button type="button" class="btn btn-light">text</button>
+    <button type="button" class="btn btn-light">text</button>
+    <button type="button" class="btn btn-light">text</button>
+    <button type="button" class="btn btn-light">text</button>
+    <button type="button" class="btn btn-light">text</button>
+    <button type="button" class="btn btn-light">text</button>
   </div>
-  
-  <script>
-    $('#navId a').click(e => {
-      e.preventDefault();
-      $(this).tab('show');
-    });
-  </script>
+
 
 
 
   <!--头部 end-->
-  
+
   <div fxLayout="row warp" class="main" #main fxLayoutAlign="start start" fxLayoutGap="gappx">
     <table class="table">
       <tbody>
-      <tr>
+        <tr>
           <td class="border-right">
             <a [routerLink]="[ '/product/details', 1 ]">
               <img src="http://placehold.it/120x120/" style="width:100%" class="rounded mx-auto d-block" alt="...">
@@ -57,7 +37,7 @@
               <i class="fa fa-plus-circle text-warning mt-2" style="font-size:1.3rem" aria-hidden="true"></i>
             </div>
           </td>
-  
+
           <td class="border-right">
             <a [routerLink]="[ '/product/details', 1 ]">
               <img src="http://placehold.it/120x120/" style="width:100%" class="rounded mx-auto d-block" alt="...">
@@ -74,7 +54,7 @@
             </div>
           </td>
         </tr>
-      <tr>
+        <tr>
           <td class="border-right">
             <a [routerLink]="[ '/product/details', 1 ]">
               <img src="http://placehold.it/120x120/" style="width:100%" class="rounded mx-auto d-block" alt="...">
@@ -90,7 +70,7 @@
               <i class="fa fa-plus-circle text-warning mt-2" style="font-size:1.3rem" aria-hidden="true"></i>
             </div>
           </td>
-  
+
           <td class="border-right">
             <a [routerLink]="[ '/product/details', 1 ]">
               <img src="http://placehold.it/120x120/" style="width:100%" class="rounded mx-auto d-block" alt="...">
@@ -123,7 +103,7 @@
               <i class="fa fa-plus-circle text-warning mt-2" style="font-size:1.3rem" aria-hidden="true"></i>
             </div>
           </td>
-  
+
           <td class="border-right">
             <a [routerLink]="[ '/product/details', 1 ]">
               <img src="http://placehold.it/120x120/" style="width:100%" class="rounded mx-auto d-block" alt="...">
@@ -140,33 +120,33 @@
             </div>
           </td>
         </tr>
-  
+
       </tbody>
     </table>
     <div class="alert alert-secondary mb-5" role="alert">
       <strong>没有更多</strong>
     </div>
-  
+
   </div>
   <div fxLayout="row" fxLayoutAlign="end start" fxLayoutGap="gappx" style="background: rgba(0,0,0,0.4);position:fixed; bottom:0;width:100% ">
     <div class="col-7 text-center">
-  
+
     </div>
     <div class="col-5">
       <button type="button" style="width:100%;" class="btn btn-warning float-right" data-toggle="modal" data-target="#exampleModalCenter">
         结账
       </button>
-  
+
     </div>
-  
-  
-  
-  
+
+
+
+
   </div>
-  
-  
-  
-  
+
+
+
+
   <!-- Modal -->
   <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle"
     aria-hidden="true">
@@ -203,7 +183,7 @@
                   <i class="fa fa-plus-circle text-warning" aria-hidden="true"></i>
                 </td>
               </tr>
-  
+
               <tr>
                 <td scope="row">
                   <h6 class="m-0">卡布奇诺</h6><small>(加热)</small>
@@ -215,7 +195,7 @@
                   <i class="fa fa-plus-circle text-warning" aria-hidden="true"></i>
                 </td>
               </tr>
-  
+
               <tr>
                 <td scope="row">
                   <h6 class="m-0">卡布奇诺</h6><small>(加热)</small>
@@ -227,7 +207,7 @@
                   <i class="fa fa-plus-circle text-warning" aria-hidden="true"></i>
                 </td>
               </tr>
-  
+
               <tr>
                 <td scope="row">
                   <h6 class="m-0">卡布奇诺</h6><small>(加热)</small>
@@ -239,25 +219,25 @@
                   <i class="fa fa-plus-circle text-warning" aria-hidden="true"></i>
                 </td>
               </tr>
-  
+
             </tbody>
           </table>
         </div>
         <div class="modal-footer text-center p-0">
-  
+
           <div class="btn-group btn-group-xs" role="group" style="width:100%" aria-label="">
             <button type="button" class="btn btn-outline-danger">
               清空</button>
             <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"> 关闭</button>
-  
+
             <button type="button" class="btn btn-outline-info">预定</button>
             <button type="button" class="btn btn-warning">立即支付</button>
-  
-  
+
+
           </div>
         </div>
       </div>
     </div>
   </div>
-  
-  </div>
+
+</div>
