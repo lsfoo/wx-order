@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title class="main-toolbar-title">
+      List
+    </ion-title>
+  </ion-toolbar>
+</ion-header>
+<div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="gappx" class="product-list">
+  <div *ngFor="let item of items">
+    <div>{{item.title}}</div>
+    <div>{{item.note}}</div>
+    <img src="{{item.photo}}" alt="" sizes="" srcset="">
+  </div>
+
+
+
+  <!--
+    <div *ngIf="selectedItem" padding>
+      You navigated here from <b>{{selectedItem.title }}</b>
+    </div>
+  -->
+</div>
