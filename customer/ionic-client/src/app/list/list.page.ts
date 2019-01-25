@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { ModalController } from '@ionic/angular'
-import { ModalPage } from '../modal/modal.page'
+import { CartComponent  } from "../cart/cart.component";
+
 @Component({
   selector: 'app-list',
   templateUrl: 'list.page.html',
@@ -49,8 +50,8 @@ export class ListPage implements OnInit {
   }
   async presentModal() {
     const modal = await this.modalController.create({
-      component: ModalPage,
-      componentProps: { value: 123 }
+      component: CartComponent,
+      componentProps: { value: {kdk:123} }
     })
     return await modal.present()
   }
