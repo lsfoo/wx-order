@@ -3,25 +3,75 @@
     <ion-buttons slot="start">
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
-<ion-slides pager="true" [options]="slideOpts">
-  <ion-slide *ngFor="let item of items">
-    <ion-button href="" routerDirection="" color="primary" fill="clear" size="small" type="submit" expand="block" round
-      strong> {{item.title}} </ion-button>
-  </ion-slide>
-</ion-slides>
+    <ion-title>list</ion-title>
+
   </ion-toolbar>
 </ion-header>
 
+<ion-slides [options]="slideOpts" class="menubar">
+  <ion-slide *ngFor="let item of items">
+    <ion-button color="primary" fill="clear" size="small" type="button" expand="block" round strong>
+      {{ item.title }}
+    </ion-button>
+  </ion-slide>
+</ion-slides>
 
 <ion-content>
+  <ion-row *ngFor="let item of items" class="product-item">
+    <ion-col size="4">
+      <img src="{{item.photo}}" width="100%">
+    </ion-col>
+    <ion-col size="8">
+      <ion-row>
+        <ion-text color="primary">
+          <h5>
+            {{item.title}}
+          </h5>
+        </ion-text>
 
-  <div fxLayout="column" fxLayoutAlign="start start" fxLayoutGap="10px" class="product-list">
-    <div fxLayout="row" fxLayoutAlign="start start" *ngFor="let item of items">
-      <img src="{{item.photo}}" alt="" sizes="" srcset="">
-      <div>{{item.title}}</div>
-      <div>{{item.note}}</div>
-    </div>
+      </ion-row>
+      <ion-row>
 
-  </div>
+        <ion-text color="medium">
+          {{item.note}}
+        </ion-text>
 
+      </ion-row>
+      <ion-row>
+        <ion-text color="medium">
+          {{item.note}}
+        </ion-text>
+      </ion-row>
+      <ion-row style="font-size: 18px;">
+        <ion-col size="7">
+          <ion-text color="danger" class="product-item-price">
+            <i class="fa fa-jpy" aria-hidden="true"></i>
+            {{item.price}}
+          </ion-text>
+        </ion-col>
+        <ion-col size="5" *ngIf="!item.hasSpec">
+          <ion-row text-center>
+            <ion-icon name="remove-circle-outline" color="medium"></ion-icon>
+            <ion-text color="medium"> 1 </ion-text>
+            <ion-icon name="add-circle-outline" color="danger"></ion-icon>
+
+          </ion-row>
+
+        </ion-col>
+        <ion-col *ngIf="item.hasSpec">
+          <ion-badge color="danger">规格</ion-badge>
+        </ion-col>
+      </ion-row>
+
+    </ion-col>
+  </ion-row>
 </ion-content>
+<ion-footer text-right>
+  <ion-badge color="warning" class="footer-total-money">
+    <i class="fa fa-jpy" aria-hidden="true"> 24.9</i>
+  </ion-badge>
+  <ion-fab class="footer-btn-buy" (click)="cartDetails()">
+    <ion-fab-button color="danger">结算</ion-fab-button>
+  </ion-fab>
+
+</ion-footer>

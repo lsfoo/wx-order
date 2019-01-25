@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core'
-
+import { ModalController } from '@ionic/angular'
+import { ModalPage } from '../modal/modal.page'
 @Component({
   selector: 'app-list',
   templateUrl: 'list.page.html',
@@ -24,19 +25,36 @@ export class ListPage implements OnInit {
     note: string
     icon: string
     photo: string
+    price: number
+    hasSpec: boolean
   }> = []
-  slideOpts;
+  slideOpts
 
-  constructor() {
+  constructor(public modalController: ModalController) {
     for (let i = 1; i < 11; i++) {
+      var isHasSpec = false
+      if (i % 2 == 0) {
+        isHasSpec = true
+      }
+
       this.items.push({
         title: 'Item ' + i,
         note: 'This is item #' + i,
         icon: this.icons[Math.floor(Math.random() * this.icons.length)],
-        photo: 'http://placehold.it/120x120/'
+        photo: 'http://placehold.it/120x120/',
+        price: 15.01,
+        hasSpec: isHasSpec
       })
     }
   }
+  async presentModal() {
+    const modal = await this.modalController.create({
+      component: ModalPage,
+      componentProps: { value: 123 }
+    })
+    return await modal.present()
+  }
+  cartDetails() {}
 
   ngOnInit() {
     this.slideOpts = {
@@ -44,12 +62,11 @@ export class ListPage implements OnInit {
       autoplay: false,
       initialSlide: 0,
       pager: false,
-      slidesPerView: 4,
+      slidesPerView: 7,
       paginationHide: true,
       paginationClickable: true,
       scrollbar: false
     }
-
   }
 
   // add back when alpha.4 is out
