@@ -76,7 +76,7 @@ html {
 }
 
 .footer {
-  background-color: rgba(253, 249, 249, 0.767);
+  background-color: rgba(250, 125, 125, 0.767);
   position: fixed;
   bottom: 0px
 }
@@ -84,12 +84,14 @@ html {
 .footer-btn-buy {
   position: fixed;
   bottom: 20px;
-  right: 20px;
+  right: 30px;
 }
 
 .footer-total-money {
   position: fixed;
-  bottom: 37px;
+  bottom: 33px;
   right: 80px;
-  color: #990033
+  color: #990033;
+  font-weight: 800;
+  font-size: 2rem
 }

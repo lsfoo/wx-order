@@ -97,7 +97,7 @@ export class ListPage implements OnInit {
       autoplay: false,
       initialSlide: 0,
       pager: false,
-      slidesPerView: 7,
+      slidesPerView: 4,
       paginationHide: true,
       paginationClickable: true,
       scrollbar: false
