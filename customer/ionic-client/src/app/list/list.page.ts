@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { ModalController } from '@ionic/angular'
+import { ModalController, AlertController } from '@ionic/angular'
 import { CartComponent } from '../cart/cart.component'
 import { SpecsComponent } from '../specs/specs.component'
 
@@ -41,7 +41,10 @@ export class ListPage implements OnInit {
   }> = []
   slideOpts
 
-  constructor(public modalController: ModalController) {
+  constructor(
+    public modalController: ModalController,
+    public alertController: AlertController
+  ) {
     for (let i = 0; i < 5; i++) {
       this.specs.push({
         title: '规格' + i,
