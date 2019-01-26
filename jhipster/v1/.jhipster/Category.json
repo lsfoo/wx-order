@@ -1,0 +1,40 @@
+{
+    "name": "Category",
+    "fields": [
+        {
+            "fieldName": "name",
+            "javadoc": "fieldName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "sort",
+            "fieldType": "Integer"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "product",
+            "otherEntityName": "product",
+            "otherEntityRelationshipName": "category"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "shop",
+            "otherEntityName": "shop",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190126153429",
+    "javadoc": "The Entity entity.\n@author A true hipster",
+    "entityTableName": "category",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": [
+        "gateway"
+    ]
+}

@@ -1,0 +1,40 @@
+{
+    "name": "OrderDetails",
+    "fields": [],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "product",
+            "otherEntityName": "product",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "orderDetails"
+        },
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "specs",
+            "otherEntityName": "specs",
+            "otherEntityField": "id",
+            "ownerSide": true,
+            "otherEntityRelationshipName": "orderDetails"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "shopOrder",
+            "otherEntityName": "shopOrder",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190126153434",
+    "javadoc": "The Entity entity.\n@author A true hipster",
+    "entityTableName": "order_details",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": [
+        "gateway"
+    ]
+}

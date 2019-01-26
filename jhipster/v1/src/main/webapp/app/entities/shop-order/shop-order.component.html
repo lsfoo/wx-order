@@ -1,0 +1,62 @@
+<div>
+    <h2 id="page-heading">
+        <span>Shop Orders</span>
+        <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-shop-order" [routerLink]="['/shop-order/new']">
+            <fa-icon [icon]="'plus'"></fa-icon>
+            <span >
+            Create new Shop Order
+            </span>
+        </button>
+    </h2>
+    <jhi-alert></jhi-alert>
+    <br/>
+    <div class="table-responsive" *ngIf="shopOrders">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+            <th><span>ID</span></th>
+            <th><span>Order No</span></th>
+            <th><span>Total Money</span></th>
+            <th><span>Shop</span></th>
+            <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr *ngFor="let shopOrder of shopOrders ;trackBy: trackId">
+                <td><a [routerLink]="['/shop-order', shopOrder.id, 'view' ]">{{shopOrder.id}}</a></td>
+                <td>{{shopOrder.orderNo}}</td>
+                <td>{{shopOrder.totalMoney}}</td>
+                <td>
+                    <div *ngIf="shopOrder.shop">
+                        <a [routerLink]="['../shop', shopOrder.shop?.id, 'view' ]" >{{shopOrder.shop?.id}}</a>
+                    </div>
+                </td>
+                <td class="text-right">
+                    <div class="btn-group flex-btn-group-container">
+                        <button type="submit"
+                                [routerLink]="['/shop-order', shopOrder.id, 'view' ]"
+                                class="btn btn-info btn-sm">
+                            <fa-icon [icon]="'eye'"></fa-icon>
+                            <span class="d-none d-md-inline">View</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/shop-order', shopOrder.id, 'edit']"
+                                class="btn btn-primary btn-sm">
+                            <fa-icon [icon]="'pencil-alt'"></fa-icon>
+                            <span class="d-none d-md-inline">Edit</span>
+                        </button>
+                        <button type="submit"
+                                [routerLink]="['/', { outlets: { popup: 'shop-order/'+ shopOrder.id + '/delete'} }]"
+                                replaceUrl="true"
+                                queryParamsHandling="merge"
+                                class="btn btn-danger btn-sm">
+                            <fa-icon [icon]="'times'"></fa-icon>
+                            <span class="d-none d-md-inline">Delete</span>
+                        </button>
+                    </div>
+                </td>
+            </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
