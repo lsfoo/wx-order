@@ -38,6 +38,7 @@ entity Product {
 }
 
 
+
 /**
  * The Entity entity.
  * @author A true hipster
