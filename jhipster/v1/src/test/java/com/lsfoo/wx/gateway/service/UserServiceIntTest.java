@@ -3,6 +3,7 @@ package com.lsfoo.wx.gateway.service;
 import com.lsfoo.wx.gateway.GatewayApp;
 import com.lsfoo.wx.gateway.config.Constants;
 import com.lsfoo.wx.gateway.domain.User;
+import com.lsfoo.wx.gateway.repository.search.UserSearchRepository;
 import com.lsfoo.wx.gateway.repository.UserRepository;
 import com.lsfoo.wx.gateway.service.dto.UserDTO;
 import com.lsfoo.wx.gateway.service.util.RandomUtil;
@@ -28,6 +29,8 @@ import java.util.Optional;
 import java.util.List;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 /**
@@ -45,6 +48,14 @@ public class UserServiceIntTest {
 
     @Autowired
     private UserService userService;
+
+    /**
+     * This repository is mocked in the com.lsfoo.wx.gateway.repository.search test package.
+     *
+     * @see com.lsfoo.wx.gateway.repository.search.UserSearchRepositoryMockConfiguration
+     */
+    @Autowired
+    private UserSearchRepository mockUserSearchRepository;
 
     @Autowired
     private AuditingHandler auditingHandler;
@@ -158,6 +169,9 @@ public class UserServiceIntTest {
         userService.removeNotActivatedUsers();
         users = userRepository.findAllByActivatedIsFalseAndCreatedDateBefore(now.minus(3, ChronoUnit.DAYS));
         assertThat(users).isEmpty();
+
+        // Verify Elasticsearch mock
+        verify(mockUserSearchRepository, times(1)).delete(user);
     }
 
     @Test
@@ -187,6 +201,9 @@ public class UserServiceIntTest {
         assertThat(userRepository.findOneByLogin("johndoe")).isPresent();
         userService.removeNotActivatedUsers();
         assertThat(userRepository.findOneByLogin("johndoe")).isNotPresent();
+
+        // Verify Elasticsearch mock
+        verify(mockUserSearchRepository, times(1)).delete(user);
     }
 
 }

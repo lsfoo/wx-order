@@ -12,7 +12,7 @@
         "packageName": "com.lsfoo.wx.gateway",
         "packageFolder": "com/lsfoo/wx/gateway",
         "prodDatabaseType": "mysql",
-        "searchEngine": false,
+        "searchEngine": "elasticsearch",
         "serviceDiscoveryType": false,
         "skipClient": false,
         "skipServer": false,

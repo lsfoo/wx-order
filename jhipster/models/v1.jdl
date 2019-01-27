@@ -11,6 +11,7 @@ application {
     //serviceDiscoveryType eureka,
     enableTranslation false,
     //enableSwaggerCodegen true
+    searchEngine elasticsearch
   }
   //entities * except Task, Job
   entities *
@@ -21,50 +22,45 @@ application {
  * @author A true hipster
  */
 entity Category {
-    /** fieldName */
-    name String
+  /** fieldName */
+  name String
     sort Integer
 }
-
 /**
  * The Entity entity.
  * @author A true hipster
  */
 entity Product {
-    /** fieldName */
-    name String
+  /** fieldName */
+  name String
     thumbnail String
     description String
 }
-
-
-
 /**
  * The Entity entity.
  * @author A true hipster
  */
 entity Specs {
-    /** fieldName */
-    name String
+  /** fieldName */
+  name String
     price Double
     stock Integer
 }
-
 /**
  * The Entity entity.
  * @author A true hipster
  */
 entity Shop {
-    /** fieldName */
-    name String
+  /** fieldName */
+  name String
 }
 /**
  * The Entity entity.
  * @author A true hipster
  */
 entity ShopOrder {
-    /** fieldName */
-    orderNo String
+  /** fieldName */
+  orderNo String
     totalMoney Double
 }
 /**
@@ -77,25 +73,23 @@ entity OrderDetails
  * One to many relationship.
  */
 relationship OneToMany {
-    Product to Specs
+  Product to Specs
     Category to Product
 }
-
 /**
  * Many to one relationship.
  */
 relationship ManyToOne {
-    Product to Shop
+  Product to Shop
     Category to Shop
     ShopOrder to Shop
     OrderDetails to ShopOrder
 }
-
 /**
  * One to one relationship.
  */
 relationship OneToOne {
-    Shop to User
+  Shop to User
     OrderDetails to Product
     OrderDetails to Specs
 }

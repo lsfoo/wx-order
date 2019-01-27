@@ -12,6 +12,7 @@ type EntityArrayResponseType = HttpResponse<ISpecs[]>;
 @Injectable({ providedIn: 'root' })
 export class SpecsService {
     public resourceUrl = SERVER_API_URL + 'api/specs';
+    public resourceSearchUrl = SERVER_API_URL + 'api/_search/specs';
 
     constructor(protected http: HttpClient) {}
 
@@ -34,5 +35,10 @@ export class SpecsService {
 
     delete(id: number): Observable<HttpResponse<any>> {
         return this.http.delete<any>(`${this.resourceUrl}/${id}`, { observe: 'response' });
+    }
+
+    search(req?: any): Observable<EntityArrayResponseType> {
+        const options = createRequestOption(req);
+        return this.http.get<ISpecs[]>(this.resourceSearchUrl, { params: options, observe: 'response' });
     }
 }

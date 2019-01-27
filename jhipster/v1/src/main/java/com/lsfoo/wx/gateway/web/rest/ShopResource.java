@@ -3,6 +3,7 @@ package com.lsfoo.wx.gateway.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.lsfoo.wx.gateway.domain.Shop;
 import com.lsfoo.wx.gateway.repository.ShopRepository;
+import com.lsfoo.wx.gateway.repository.search.ShopSearchRepository;
 import com.lsfoo.wx.gateway.web.rest.errors.BadRequestAlertException;
 import com.lsfoo.wx.gateway.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -16,6 +17,10 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing Shop.
@@ -30,8 +35,11 @@ public class ShopResource {
 
     private final ShopRepository shopRepository;
 
-    public ShopResource(ShopRepository shopRepository) {
+    private final ShopSearchRepository shopSearchRepository;
+
+    public ShopResource(ShopRepository shopRepository, ShopSearchRepository shopSearchRepository) {
         this.shopRepository = shopRepository;
+        this.shopSearchRepository = shopSearchRepository;
     }
 
     /**
@@ -49,6 +57,7 @@ public class ShopResource {
             throw new BadRequestAlertException("A new shop cannot already have an ID", ENTITY_NAME, "idexists");
         }
         Shop result = shopRepository.save(shop);
+        shopSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/shops/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -71,6 +80,7 @@ public class ShopResource {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         Shop result = shopRepository.save(shop);
+        shopSearchRepository.save(result);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, shop.getId().toString()))
             .body(result);
@@ -114,6 +124,24 @@ public class ShopResource {
         log.debug("REST request to delete Shop : {}", id);
 
         shopRepository.deleteById(id);
+        shopSearchRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    /**
+     * SEARCH  /_search/shops?query=:query : search for the shop corresponding
+     * to the query.
+     *
+     * @param query the query of the shop search
+     * @return the result of the search
+     */
+    @GetMapping("/_search/shops")
+    @Timed
+    public List<Shop> searchShops(@RequestParam String query) {
+        log.debug("REST request to search Shops for query {}", query);
+        return StreamSupport
+            .stream(shopSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+            .collect(Collectors.toList());
+    }
+
 }

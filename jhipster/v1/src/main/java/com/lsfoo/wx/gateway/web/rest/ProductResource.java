@@ -3,6 +3,7 @@ package com.lsfoo.wx.gateway.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.lsfoo.wx.gateway.domain.Product;
 import com.lsfoo.wx.gateway.repository.ProductRepository;
+import com.lsfoo.wx.gateway.repository.search.ProductSearchRepository;
 import com.lsfoo.wx.gateway.web.rest.errors.BadRequestAlertException;
 import com.lsfoo.wx.gateway.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -19,6 +20,8 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
+import static org.elasticsearch.index.query.QueryBuilders.*;
+
 /**
  * REST controller for managing Product.
  */
@@ -32,8 +35,11 @@ public class ProductResource {
 
     private final ProductRepository productRepository;
 
-    public ProductResource(ProductRepository productRepository) {
+    private final ProductSearchRepository productSearchRepository;
+
+    public ProductResource(ProductRepository productRepository, ProductSearchRepository productSearchRepository) {
         this.productRepository = productRepository;
+        this.productSearchRepository = productSearchRepository;
     }
 
     /**
@@ -51,6 +57,7 @@ public class ProductResource {
             throw new BadRequestAlertException("A new product cannot already have an ID", ENTITY_NAME, "idexists");
         }
         Product result = productRepository.save(product);
+        productSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/products/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -73,6 +80,7 @@ public class ProductResource {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         Product result = productRepository.save(product);
+        productSearchRepository.save(result);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, product.getId().toString()))
             .body(result);
@@ -124,6 +132,24 @@ public class ProductResource {
         log.debug("REST request to delete Product : {}", id);
 
         productRepository.deleteById(id);
+        productSearchRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    /**
+     * SEARCH  /_search/products?query=:query : search for the product corresponding
+     * to the query.
+     *
+     * @param query the query of the product search
+     * @return the result of the search
+     */
+    @GetMapping("/_search/products")
+    @Timed
+    public List<Product> searchProducts(@RequestParam String query) {
+        log.debug("REST request to search Products for query {}", query);
+        return StreamSupport
+            .stream(productSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+            .collect(Collectors.toList());
+    }
+
 }

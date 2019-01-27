@@ -1,0 +1,33 @@
+<ion-content class="content">
+
+  <!-- Icon end -->
+
+  <ion-list>
+    <ion-radio-group name="auto">
+      <ion-list-header>Auto Manufacturers</ion-list-header>
+      <ion-item *ngFor="let item of data.specs">
+        <ion-label>{{item.title}}</ion-label>
+        <ion-radio color="warning" value="{{item.title}}"></ion-radio>
+      </ion-item>
+    </ion-radio-group>
+  </ion-list>
+
+  <ion-row style="font-size:2.4rem;margin-top:20px;padding:10px">
+    <ion-col size="8">
+      <ion-text class="product-item-price">
+        <i class="fa fa-jpy" aria-hidden="true"></i>
+        1111
+      </ion-text>
+    </ion-col>
+    <ion-col size="4" text-right>
+      <i class="fa fa-minus-circle icon-remove" aria-hidden="true"></i>
+      <ion-text color="medium"> 1 </ion-text>
+      <i class="fa fa-plus-circle icon-add" aria-hidden="true"></i>
+    </ion-col>
+    <ion-col size="12" text-right>
+      <ion-button fill="outline" (click)="closeModal()" color="warning">
+        确定
+      </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-content>

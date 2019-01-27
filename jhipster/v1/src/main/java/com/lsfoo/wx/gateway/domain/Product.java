@@ -9,6 +9,7 @@ import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 import javax.persistence.*;
 
+import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -22,6 +23,7 @@ import java.util.Objects;
 @Entity
 @Table(name = "product")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+@Document(indexName = "product")
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -39,6 +41,9 @@ public class Product implements Serializable {
 
     @Column(name = "thumbnail")
     private String thumbnail;
+
+    @Column(name = "description")
+    private String description;
 
     @OneToMany(mappedBy = "product")
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
@@ -88,6 +93,19 @@ public class Product implements Serializable {
 
     public void setThumbnail(String thumbnail) {
         this.thumbnail = thumbnail;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Product description(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Set<Specs> getSpecs() {
@@ -181,6 +199,7 @@ public class Product implements Serializable {
             "id=" + getId() +
             ", name='" + getName() + "'" +
             ", thumbnail='" + getThumbnail() + "'" +
+            ", description='" + getDescription() + "'" +
             "}";
     }
 }

@@ -4,6 +4,7 @@ import com.lsfoo.wx.gateway.GatewayApp;
 
 import com.lsfoo.wx.gateway.domain.ShopOrder;
 import com.lsfoo.wx.gateway.repository.ShopOrderRepository;
+import com.lsfoo.wx.gateway.repository.search.ShopOrderSearchRepository;
 import com.lsfoo.wx.gateway.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -22,12 +23,15 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.util.Collections;
 import java.util.List;
 
 
 import static com.lsfoo.wx.gateway.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -48,6 +52,14 @@ public class ShopOrderResourceIntTest {
 
     @Autowired
     private ShopOrderRepository shopOrderRepository;
+
+    /**
+     * This repository is mocked in the com.lsfoo.wx.gateway.repository.search test package.
+     *
+     * @see com.lsfoo.wx.gateway.repository.search.ShopOrderSearchRepositoryMockConfiguration
+     */
+    @Autowired
+    private ShopOrderSearchRepository mockShopOrderSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -71,7 +83,7 @@ public class ShopOrderResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final ShopOrderResource shopOrderResource = new ShopOrderResource(shopOrderRepository);
+        final ShopOrderResource shopOrderResource = new ShopOrderResource(shopOrderRepository, mockShopOrderSearchRepository);
         this.restShopOrderMockMvc = MockMvcBuilders.standaloneSetup(shopOrderResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -115,6 +127,9 @@ public class ShopOrderResourceIntTest {
         ShopOrder testShopOrder = shopOrderList.get(shopOrderList.size() - 1);
         assertThat(testShopOrder.getOrderNo()).isEqualTo(DEFAULT_ORDER_NO);
         assertThat(testShopOrder.getTotalMoney()).isEqualTo(DEFAULT_TOTAL_MONEY);
+
+        // Validate the ShopOrder in Elasticsearch
+        verify(mockShopOrderSearchRepository, times(1)).save(testShopOrder);
     }
 
     @Test
@@ -134,6 +149,9 @@ public class ShopOrderResourceIntTest {
         // Validate the ShopOrder in the database
         List<ShopOrder> shopOrderList = shopOrderRepository.findAll();
         assertThat(shopOrderList).hasSize(databaseSizeBeforeCreate);
+
+        // Validate the ShopOrder in Elasticsearch
+        verify(mockShopOrderSearchRepository, times(0)).save(shopOrder);
     }
 
     @Test
@@ -201,6 +219,9 @@ public class ShopOrderResourceIntTest {
         ShopOrder testShopOrder = shopOrderList.get(shopOrderList.size() - 1);
         assertThat(testShopOrder.getOrderNo()).isEqualTo(UPDATED_ORDER_NO);
         assertThat(testShopOrder.getTotalMoney()).isEqualTo(UPDATED_TOTAL_MONEY);
+
+        // Validate the ShopOrder in Elasticsearch
+        verify(mockShopOrderSearchRepository, times(1)).save(testShopOrder);
     }
 
     @Test
@@ -219,6 +240,9 @@ public class ShopOrderResourceIntTest {
         // Validate the ShopOrder in the database
         List<ShopOrder> shopOrderList = shopOrderRepository.findAll();
         assertThat(shopOrderList).hasSize(databaseSizeBeforeUpdate);
+
+        // Validate the ShopOrder in Elasticsearch
+        verify(mockShopOrderSearchRepository, times(0)).save(shopOrder);
     }
 
     @Test
@@ -237,6 +261,25 @@ public class ShopOrderResourceIntTest {
         // Validate the database is empty
         List<ShopOrder> shopOrderList = shopOrderRepository.findAll();
         assertThat(shopOrderList).hasSize(databaseSizeBeforeDelete - 1);
+
+        // Validate the ShopOrder in Elasticsearch
+        verify(mockShopOrderSearchRepository, times(1)).deleteById(shopOrder.getId());
+    }
+
+    @Test
+    @Transactional
+    public void searchShopOrder() throws Exception {
+        // Initialize the database
+        shopOrderRepository.saveAndFlush(shopOrder);
+        when(mockShopOrderSearchRepository.search(queryStringQuery("id:" + shopOrder.getId())))
+            .thenReturn(Collections.singletonList(shopOrder));
+        // Search the shopOrder
+        restShopOrderMockMvc.perform(get("/api/_search/shop-orders?query=id:" + shopOrder.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(shopOrder.getId().intValue())))
+            .andExpect(jsonPath("$.[*].orderNo").value(hasItem(DEFAULT_ORDER_NO)))
+            .andExpect(jsonPath("$.[*].totalMoney").value(hasItem(DEFAULT_TOTAL_MONEY.doubleValue())));
     }
 
     @Test

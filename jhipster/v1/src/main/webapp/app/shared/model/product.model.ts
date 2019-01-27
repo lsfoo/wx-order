@@ -7,6 +7,7 @@ export interface IProduct {
     id?: number;
     name?: string;
     thumbnail?: string;
+    description?: string;
     specs?: ISpecs[];
     shop?: IShop;
     orderDetails?: IOrderDetails;
@@ -18,6 +19,7 @@ export class Product implements IProduct {
         public id?: number,
         public name?: string,
         public thumbnail?: string,
+        public description?: string,
         public specs?: ISpecs[],
         public shop?: IShop,
         public orderDetails?: IOrderDetails,

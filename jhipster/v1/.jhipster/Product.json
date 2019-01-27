@@ -9,6 +9,10 @@
         {
             "fieldName": "thumbnail",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
         }
     ],
     "relationships": [

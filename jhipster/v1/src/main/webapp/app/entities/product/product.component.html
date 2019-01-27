@@ -3,12 +3,27 @@
         <span>Products</span>
         <button id="jh-create-entity" class="btn btn-primary float-right jh-create-entity create-product" [routerLink]="['/product/new']">
             <fa-icon [icon]="'plus'"></fa-icon>
-            <span >
+            <span class="hidden-sm-down" >
             Create new Product
             </span>
         </button>
     </h2>
     <jhi-alert></jhi-alert>
+    <div class="row">
+        <div class="col-sm-12">
+            <form name="searchForm" class="form-inline">
+                <div class="input-group w-100 mt-3">
+                    <input type="text" class="form-control" [(ngModel)]="currentSearch" id="currentSearch" name="currentSearch" placeholder="Query">
+                    <button class="input-group-append btn btn-info" (click)="search(currentSearch)">
+                        <fa-icon [icon]="'search'"></fa-icon>
+                    </button>
+                    <button class="input-group-append btn btn-danger" (click)="clear()" *ngIf="currentSearch">
+                        <fa-icon [icon]="'trash-alt'"></fa-icon>
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
     <br/>
     <div class="table-responsive" *ngIf="products">
         <table class="table table-striped">
@@ -17,6 +32,7 @@
             <th><span>ID</span></th>
             <th><span>Name</span></th>
             <th><span>Thumbnail</span></th>
+            <th><span>Description</span></th>
             <th><span>Shop</span></th>
             <th><span>Category</span></th>
             <th></th>
@@ -27,6 +43,7 @@
                 <td><a [routerLink]="['/product', product.id, 'view' ]">{{product.id}}</a></td>
                 <td>{{product.name}}</td>
                 <td>{{product.thumbnail}}</td>
+                <td>{{product.description}}</td>
                 <td>
                     <div *ngIf="product.shop">
                         <a [routerLink]="['../shop', product.shop?.id, 'view' ]" >{{product.shop?.id}}</a>

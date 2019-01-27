@@ -4,6 +4,7 @@ import com.lsfoo.wx.gateway.GatewayApp;
 
 import com.lsfoo.wx.gateway.domain.OrderDetails;
 import com.lsfoo.wx.gateway.repository.OrderDetailsRepository;
+import com.lsfoo.wx.gateway.repository.search.OrderDetailsSearchRepository;
 import com.lsfoo.wx.gateway.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -22,12 +23,15 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.util.Collections;
 import java.util.List;
 
 
 import static com.lsfoo.wx.gateway.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -42,6 +46,14 @@ public class OrderDetailsResourceIntTest {
 
     @Autowired
     private OrderDetailsRepository orderDetailsRepository;
+
+    /**
+     * This repository is mocked in the com.lsfoo.wx.gateway.repository.search test package.
+     *
+     * @see com.lsfoo.wx.gateway.repository.search.OrderDetailsSearchRepositoryMockConfiguration
+     */
+    @Autowired
+    private OrderDetailsSearchRepository mockOrderDetailsSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -65,7 +77,7 @@ public class OrderDetailsResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final OrderDetailsResource orderDetailsResource = new OrderDetailsResource(orderDetailsRepository);
+        final OrderDetailsResource orderDetailsResource = new OrderDetailsResource(orderDetailsRepository, mockOrderDetailsSearchRepository);
         this.restOrderDetailsMockMvc = MockMvcBuilders.standaloneSetup(orderDetailsResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -105,6 +117,9 @@ public class OrderDetailsResourceIntTest {
         List<OrderDetails> orderDetailsList = orderDetailsRepository.findAll();
         assertThat(orderDetailsList).hasSize(databaseSizeBeforeCreate + 1);
         OrderDetails testOrderDetails = orderDetailsList.get(orderDetailsList.size() - 1);
+
+        // Validate the OrderDetails in Elasticsearch
+        verify(mockOrderDetailsSearchRepository, times(1)).save(testOrderDetails);
     }
 
     @Test
@@ -124,6 +139,9 @@ public class OrderDetailsResourceIntTest {
         // Validate the OrderDetails in the database
         List<OrderDetails> orderDetailsList = orderDetailsRepository.findAll();
         assertThat(orderDetailsList).hasSize(databaseSizeBeforeCreate);
+
+        // Validate the OrderDetails in Elasticsearch
+        verify(mockOrderDetailsSearchRepository, times(0)).save(orderDetails);
     }
 
     @Test
@@ -182,6 +200,9 @@ public class OrderDetailsResourceIntTest {
         List<OrderDetails> orderDetailsList = orderDetailsRepository.findAll();
         assertThat(orderDetailsList).hasSize(databaseSizeBeforeUpdate);
         OrderDetails testOrderDetails = orderDetailsList.get(orderDetailsList.size() - 1);
+
+        // Validate the OrderDetails in Elasticsearch
+        verify(mockOrderDetailsSearchRepository, times(1)).save(testOrderDetails);
     }
 
     @Test
@@ -200,6 +221,9 @@ public class OrderDetailsResourceIntTest {
         // Validate the OrderDetails in the database
         List<OrderDetails> orderDetailsList = orderDetailsRepository.findAll();
         assertThat(orderDetailsList).hasSize(databaseSizeBeforeUpdate);
+
+        // Validate the OrderDetails in Elasticsearch
+        verify(mockOrderDetailsSearchRepository, times(0)).save(orderDetails);
     }
 
     @Test
@@ -218,6 +242,23 @@ public class OrderDetailsResourceIntTest {
         // Validate the database is empty
         List<OrderDetails> orderDetailsList = orderDetailsRepository.findAll();
         assertThat(orderDetailsList).hasSize(databaseSizeBeforeDelete - 1);
+
+        // Validate the OrderDetails in Elasticsearch
+        verify(mockOrderDetailsSearchRepository, times(1)).deleteById(orderDetails.getId());
+    }
+
+    @Test
+    @Transactional
+    public void searchOrderDetails() throws Exception {
+        // Initialize the database
+        orderDetailsRepository.saveAndFlush(orderDetails);
+        when(mockOrderDetailsSearchRepository.search(queryStringQuery("id:" + orderDetails.getId())))
+            .thenReturn(Collections.singletonList(orderDetails));
+        // Search the orderDetails
+        restOrderDetailsMockMvc.perform(get("/api/_search/order-details?query=id:" + orderDetails.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(orderDetails.getId().intValue())));
     }
 
     @Test

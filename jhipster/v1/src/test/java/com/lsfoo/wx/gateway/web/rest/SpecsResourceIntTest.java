@@ -4,6 +4,7 @@ import com.lsfoo.wx.gateway.GatewayApp;
 
 import com.lsfoo.wx.gateway.domain.Specs;
 import com.lsfoo.wx.gateway.repository.SpecsRepository;
+import com.lsfoo.wx.gateway.repository.search.SpecsSearchRepository;
 import com.lsfoo.wx.gateway.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -22,12 +23,15 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.util.Collections;
 import java.util.List;
 
 
 import static com.lsfoo.wx.gateway.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -52,6 +56,14 @@ public class SpecsResourceIntTest {
     @Autowired
     private SpecsRepository specsRepository;
 
+    /**
+     * This repository is mocked in the com.lsfoo.wx.gateway.repository.search test package.
+     *
+     * @see com.lsfoo.wx.gateway.repository.search.SpecsSearchRepositoryMockConfiguration
+     */
+    @Autowired
+    private SpecsSearchRepository mockSpecsSearchRepository;
+
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
 
@@ -74,7 +86,7 @@ public class SpecsResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final SpecsResource specsResource = new SpecsResource(specsRepository);
+        final SpecsResource specsResource = new SpecsResource(specsRepository, mockSpecsSearchRepository);
         this.restSpecsMockMvc = MockMvcBuilders.standaloneSetup(specsResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -120,6 +132,9 @@ public class SpecsResourceIntTest {
         assertThat(testSpecs.getName()).isEqualTo(DEFAULT_NAME);
         assertThat(testSpecs.getPrice()).isEqualTo(DEFAULT_PRICE);
         assertThat(testSpecs.getStock()).isEqualTo(DEFAULT_STOCK);
+
+        // Validate the Specs in Elasticsearch
+        verify(mockSpecsSearchRepository, times(1)).save(testSpecs);
     }
 
     @Test
@@ -139,6 +154,9 @@ public class SpecsResourceIntTest {
         // Validate the Specs in the database
         List<Specs> specsList = specsRepository.findAll();
         assertThat(specsList).hasSize(databaseSizeBeforeCreate);
+
+        // Validate the Specs in Elasticsearch
+        verify(mockSpecsSearchRepository, times(0)).save(specs);
     }
 
     @Test
@@ -210,6 +228,9 @@ public class SpecsResourceIntTest {
         assertThat(testSpecs.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testSpecs.getPrice()).isEqualTo(UPDATED_PRICE);
         assertThat(testSpecs.getStock()).isEqualTo(UPDATED_STOCK);
+
+        // Validate the Specs in Elasticsearch
+        verify(mockSpecsSearchRepository, times(1)).save(testSpecs);
     }
 
     @Test
@@ -228,6 +249,9 @@ public class SpecsResourceIntTest {
         // Validate the Specs in the database
         List<Specs> specsList = specsRepository.findAll();
         assertThat(specsList).hasSize(databaseSizeBeforeUpdate);
+
+        // Validate the Specs in Elasticsearch
+        verify(mockSpecsSearchRepository, times(0)).save(specs);
     }
 
     @Test
@@ -246,6 +270,26 @@ public class SpecsResourceIntTest {
         // Validate the database is empty
         List<Specs> specsList = specsRepository.findAll();
         assertThat(specsList).hasSize(databaseSizeBeforeDelete - 1);
+
+        // Validate the Specs in Elasticsearch
+        verify(mockSpecsSearchRepository, times(1)).deleteById(specs.getId());
+    }
+
+    @Test
+    @Transactional
+    public void searchSpecs() throws Exception {
+        // Initialize the database
+        specsRepository.saveAndFlush(specs);
+        when(mockSpecsSearchRepository.search(queryStringQuery("id:" + specs.getId())))
+            .thenReturn(Collections.singletonList(specs));
+        // Search the specs
+        restSpecsMockMvc.perform(get("/api/_search/specs?query=id:" + specs.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(specs.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].price").value(hasItem(DEFAULT_PRICE.doubleValue())))
+            .andExpect(jsonPath("$.[*].stock").value(hasItem(DEFAULT_STOCK)));
     }
 
     @Test

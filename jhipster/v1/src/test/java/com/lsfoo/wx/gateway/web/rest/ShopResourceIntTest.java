@@ -4,6 +4,7 @@ import com.lsfoo.wx.gateway.GatewayApp;
 
 import com.lsfoo.wx.gateway.domain.Shop;
 import com.lsfoo.wx.gateway.repository.ShopRepository;
+import com.lsfoo.wx.gateway.repository.search.ShopSearchRepository;
 import com.lsfoo.wx.gateway.web.rest.errors.ExceptionTranslator;
 
 import org.junit.Before;
@@ -22,12 +23,15 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.validation.Validator;
 
 import javax.persistence.EntityManager;
+import java.util.Collections;
 import java.util.List;
 
 
 import static com.lsfoo.wx.gateway.web.rest.TestUtil.createFormattingConversionService;
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.elasticsearch.index.query.QueryBuilders.queryStringQuery;
 import static org.hamcrest.Matchers.hasItem;
+import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -45,6 +49,14 @@ public class ShopResourceIntTest {
 
     @Autowired
     private ShopRepository shopRepository;
+
+    /**
+     * This repository is mocked in the com.lsfoo.wx.gateway.repository.search test package.
+     *
+     * @see com.lsfoo.wx.gateway.repository.search.ShopSearchRepositoryMockConfiguration
+     */
+    @Autowired
+    private ShopSearchRepository mockShopSearchRepository;
 
     @Autowired
     private MappingJackson2HttpMessageConverter jacksonMessageConverter;
@@ -68,7 +80,7 @@ public class ShopResourceIntTest {
     @Before
     public void setup() {
         MockitoAnnotations.initMocks(this);
-        final ShopResource shopResource = new ShopResource(shopRepository);
+        final ShopResource shopResource = new ShopResource(shopRepository, mockShopSearchRepository);
         this.restShopMockMvc = MockMvcBuilders.standaloneSetup(shopResource)
             .setCustomArgumentResolvers(pageableArgumentResolver)
             .setControllerAdvice(exceptionTranslator)
@@ -110,6 +122,9 @@ public class ShopResourceIntTest {
         assertThat(shopList).hasSize(databaseSizeBeforeCreate + 1);
         Shop testShop = shopList.get(shopList.size() - 1);
         assertThat(testShop.getName()).isEqualTo(DEFAULT_NAME);
+
+        // Validate the Shop in Elasticsearch
+        verify(mockShopSearchRepository, times(1)).save(testShop);
     }
 
     @Test
@@ -129,6 +144,9 @@ public class ShopResourceIntTest {
         // Validate the Shop in the database
         List<Shop> shopList = shopRepository.findAll();
         assertThat(shopList).hasSize(databaseSizeBeforeCreate);
+
+        // Validate the Shop in Elasticsearch
+        verify(mockShopSearchRepository, times(0)).save(shop);
     }
 
     @Test
@@ -192,6 +210,9 @@ public class ShopResourceIntTest {
         assertThat(shopList).hasSize(databaseSizeBeforeUpdate);
         Shop testShop = shopList.get(shopList.size() - 1);
         assertThat(testShop.getName()).isEqualTo(UPDATED_NAME);
+
+        // Validate the Shop in Elasticsearch
+        verify(mockShopSearchRepository, times(1)).save(testShop);
     }
 
     @Test
@@ -210,6 +231,9 @@ public class ShopResourceIntTest {
         // Validate the Shop in the database
         List<Shop> shopList = shopRepository.findAll();
         assertThat(shopList).hasSize(databaseSizeBeforeUpdate);
+
+        // Validate the Shop in Elasticsearch
+        verify(mockShopSearchRepository, times(0)).save(shop);
     }
 
     @Test
@@ -228,6 +252,24 @@ public class ShopResourceIntTest {
         // Validate the database is empty
         List<Shop> shopList = shopRepository.findAll();
         assertThat(shopList).hasSize(databaseSizeBeforeDelete - 1);
+
+        // Validate the Shop in Elasticsearch
+        verify(mockShopSearchRepository, times(1)).deleteById(shop.getId());
+    }
+
+    @Test
+    @Transactional
+    public void searchShop() throws Exception {
+        // Initialize the database
+        shopRepository.saveAndFlush(shop);
+        when(mockShopSearchRepository.search(queryStringQuery("id:" + shop.getId())))
+            .thenReturn(Collections.singletonList(shop));
+        // Search the shop
+        restShopMockMvc.perform(get("/api/_search/shops?query=id:" + shop.getId()))
+            .andExpect(status().isOk())
+            .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
+            .andExpect(jsonPath("$.[*].id").value(hasItem(shop.getId().intValue())))
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
     }
 
     @Test

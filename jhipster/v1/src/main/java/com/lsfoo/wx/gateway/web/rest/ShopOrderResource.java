@@ -3,6 +3,7 @@ package com.lsfoo.wx.gateway.web.rest;
 import com.codahale.metrics.annotation.Timed;
 import com.lsfoo.wx.gateway.domain.ShopOrder;
 import com.lsfoo.wx.gateway.repository.ShopOrderRepository;
+import com.lsfoo.wx.gateway.repository.search.ShopOrderSearchRepository;
 import com.lsfoo.wx.gateway.web.rest.errors.BadRequestAlertException;
 import com.lsfoo.wx.gateway.web.rest.util.HeaderUtil;
 import io.github.jhipster.web.util.ResponseUtil;
@@ -16,6 +17,10 @@ import java.net.URISyntaxException;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
+import java.util.stream.StreamSupport;
+
+import static org.elasticsearch.index.query.QueryBuilders.*;
 
 /**
  * REST controller for managing ShopOrder.
@@ -30,8 +35,11 @@ public class ShopOrderResource {
 
     private final ShopOrderRepository shopOrderRepository;
 
-    public ShopOrderResource(ShopOrderRepository shopOrderRepository) {
+    private final ShopOrderSearchRepository shopOrderSearchRepository;
+
+    public ShopOrderResource(ShopOrderRepository shopOrderRepository, ShopOrderSearchRepository shopOrderSearchRepository) {
         this.shopOrderRepository = shopOrderRepository;
+        this.shopOrderSearchRepository = shopOrderSearchRepository;
     }
 
     /**
@@ -49,6 +57,7 @@ public class ShopOrderResource {
             throw new BadRequestAlertException("A new shopOrder cannot already have an ID", ENTITY_NAME, "idexists");
         }
         ShopOrder result = shopOrderRepository.save(shopOrder);
+        shopOrderSearchRepository.save(result);
         return ResponseEntity.created(new URI("/api/shop-orders/" + result.getId()))
             .headers(HeaderUtil.createEntityCreationAlert(ENTITY_NAME, result.getId().toString()))
             .body(result);
@@ -71,6 +80,7 @@ public class ShopOrderResource {
             throw new BadRequestAlertException("Invalid id", ENTITY_NAME, "idnull");
         }
         ShopOrder result = shopOrderRepository.save(shopOrder);
+        shopOrderSearchRepository.save(result);
         return ResponseEntity.ok()
             .headers(HeaderUtil.createEntityUpdateAlert(ENTITY_NAME, shopOrder.getId().toString()))
             .body(result);
@@ -114,6 +124,24 @@ public class ShopOrderResource {
         log.debug("REST request to delete ShopOrder : {}", id);
 
         shopOrderRepository.deleteById(id);
+        shopOrderSearchRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
     }
+
+    /**
+     * SEARCH  /_search/shop-orders?query=:query : search for the shopOrder corresponding
+     * to the query.
+     *
+     * @param query the query of the shopOrder search
+     * @return the result of the search
+     */
+    @GetMapping("/_search/shop-orders")
+    @Timed
+    public List<ShopOrder> searchShopOrders(@RequestParam String query) {
+        log.debug("REST request to search ShopOrders for query {}", query);
+        return StreamSupport
+            .stream(shopOrderSearchRepository.search(queryStringQuery(query)).spliterator(), false)
+            .collect(Collectors.toList());
+    }
+
 }

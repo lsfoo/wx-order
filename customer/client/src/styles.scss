@@ -10,4 +10,7 @@ $fa-font-path: '../node_modules/font-awesome/fonts';
 //@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 //@import "~@angular/material/prebuilt-themes/purple-green.css";
 
-
+html,
+body {
+  height: 100%;
+}
