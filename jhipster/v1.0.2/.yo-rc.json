@@ -1,7 +1,7 @@
 {
     "generator-jhipster": {
         "databaseType": "sql",
-        "devDatabaseType": "h2Memory",
+        "devDatabaseType": "h2Disk",
         "enableHibernateCache": true,
         "enableSwaggerCodegen": false,
         "enableTranslation": false,

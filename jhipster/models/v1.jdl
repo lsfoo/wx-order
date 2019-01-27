@@ -12,7 +12,6 @@ application {
     enableTranslation false,
     //enableSwaggerCodegen true
     searchEngine elasticsearch
-    devDatabaseType h2Memory
   }
   //entities * except Task, Job
   entities *
