@@ -6,10 +6,10 @@ import { filter, map } from 'rxjs/operators';
 import { JhiAlertService } from 'ng-jhipster';
 import { ISpecs } from 'app/shared/model/specs.model';
 import { SpecsService } from './specs.service';
-import { IOrderDetails } from 'app/shared/model/order-details.model';
-import { OrderDetailsService } from 'app/entities/order-details';
 import { IProduct } from 'app/shared/model/product.model';
 import { ProductService } from 'app/entities/product';
+import { IOrderDetails } from 'app/shared/model/order-details.model';
+import { OrderDetailsService } from 'app/entities/order-details';
 
 @Component({
     selector: 'jhi-specs-update',
@@ -19,15 +19,15 @@ export class SpecsUpdateComponent implements OnInit {
     specs: ISpecs;
     isSaving: boolean;
 
-    orderdetails: IOrderDetails[];
-
     products: IProduct[];
+
+    orderdetails: IOrderDetails[];
 
     constructor(
         protected jhiAlertService: JhiAlertService,
         protected specsService: SpecsService,
-        protected orderDetailsService: OrderDetailsService,
         protected productService: ProductService,
+        protected orderDetailsService: OrderDetailsService,
         protected activatedRoute: ActivatedRoute
     ) {}
 
@@ -36,13 +36,6 @@ export class SpecsUpdateComponent implements OnInit {
         this.activatedRoute.data.subscribe(({ specs }) => {
             this.specs = specs;
         });
-        this.orderDetailsService
-            .query()
-            .pipe(
-                filter((mayBeOk: HttpResponse<IOrderDetails[]>) => mayBeOk.ok),
-                map((response: HttpResponse<IOrderDetails[]>) => response.body)
-            )
-            .subscribe((res: IOrderDetails[]) => (this.orderdetails = res), (res: HttpErrorResponse) => this.onError(res.message));
         this.productService
             .query()
             .pipe(
@@ -50,6 +43,13 @@ export class SpecsUpdateComponent implements OnInit {
                 map((response: HttpResponse<IProduct[]>) => response.body)
             )
             .subscribe((res: IProduct[]) => (this.products = res), (res: HttpErrorResponse) => this.onError(res.message));
+        this.orderDetailsService
+            .query()
+            .pipe(
+                filter((mayBeOk: HttpResponse<IOrderDetails[]>) => mayBeOk.ok),
+                map((response: HttpResponse<IOrderDetails[]>) => response.body)
+            )
+            .subscribe((res: IOrderDetails[]) => (this.orderdetails = res), (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     previousState() {
@@ -82,11 +82,11 @@ export class SpecsUpdateComponent implements OnInit {
         this.jhiAlertService.error(errorMessage, null, null);
     }
 
-    trackOrderDetailsById(index: number, item: IOrderDetails) {
+    trackProductById(index: number, item: IProduct) {
         return item.id;
     }
 
-    trackProductById(index: number, item: IProduct) {
+    trackOrderDetailsById(index: number, item: IOrderDetails) {
         return item.id;
     }
 }

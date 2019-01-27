@@ -44,13 +44,13 @@ public class Specs implements Serializable {
     @Column(name = "stock")
     private Integer stock;
 
-    @OneToOne(mappedBy = "specs")
-    @JsonIgnore
-    private OrderDetails orderDetails;
-
     @ManyToOne
     @JsonIgnoreProperties("specs")
     private Product product;
+
+    @OneToOne(mappedBy = "specs")
+    @JsonIgnore
+    private OrderDetails orderDetails;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -100,19 +100,6 @@ public class Specs implements Serializable {
         this.stock = stock;
     }
 
-    public OrderDetails getOrderDetails() {
-        return orderDetails;
-    }
-
-    public Specs orderDetails(OrderDetails orderDetails) {
-        this.orderDetails = orderDetails;
-        return this;
-    }
-
-    public void setOrderDetails(OrderDetails orderDetails) {
-        this.orderDetails = orderDetails;
-    }
-
     public Product getProduct() {
         return product;
     }
@@ -124,6 +111,19 @@ public class Specs implements Serializable {
 
     public void setProduct(Product product) {
         this.product = product;
+    }
+
+    public OrderDetails getOrderDetails() {
+        return orderDetails;
+    }
+
+    public Specs orderDetails(OrderDetails orderDetails) {
+        this.orderDetails = orderDetails;
+        return this;
+    }
+
+    public void setOrderDetails(OrderDetails orderDetails) {
+        this.orderDetails = orderDetails;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

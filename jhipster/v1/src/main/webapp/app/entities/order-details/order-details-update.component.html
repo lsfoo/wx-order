@@ -25,10 +25,10 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label class="form-control-label" for="field_shopOrder">Shop Order</label>
-                    <select class="form-control" id="field_shopOrder" name="shopOrder" [(ngModel)]="orderDetails.shopOrder" >
+                    <label class="form-control-label" for="field_order">Order</label>
+                    <select class="form-control" id="field_order" name="order" [(ngModel)]="orderDetails.order" >
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="shopOrderOption.id === orderDetails.shopOrder?.id ? orderDetails.shopOrder : shopOrderOption" *ngFor="let shopOrderOption of shoporders; trackBy: trackShopOrderById">{{shopOrderOption.id}}</option>
+                        <option [ngValue]="shopOrderOption.id === orderDetails.order?.id ? orderDetails.order : shopOrderOption" *ngFor="let shopOrderOption of shoporders; trackBy: trackShopOrderById">{{shopOrderOption.orderNo}}</option>
                     </select>
                 </div>
             </div>

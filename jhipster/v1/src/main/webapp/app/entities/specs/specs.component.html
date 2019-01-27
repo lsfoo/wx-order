@@ -45,7 +45,7 @@
                 <td>{{specs.stock}}</td>
                 <td>
                     <div *ngIf="specs.product">
-                        <a [routerLink]="['../product', specs.product?.id, 'view' ]" >{{specs.product?.id}}</a>
+                        <a [routerLink]="['../product', specs.product?.id, 'view' ]" >{{specs.product?.name}}</a>
                     </div>
                 </td>
                 <td class="text-right">

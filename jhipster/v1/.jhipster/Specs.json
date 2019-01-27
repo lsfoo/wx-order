@@ -17,17 +17,17 @@
     ],
     "relationships": [
         {
+            "relationshipType": "many-to-one",
+            "relationshipName": "product",
+            "otherEntityName": "product",
+            "otherEntityField": "name"
+        },
+        {
             "relationshipType": "one-to-one",
             "relationshipName": "orderDetails",
             "otherEntityName": "orderDetails",
             "ownerSide": false,
             "otherEntityRelationshipName": "specs"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "product",
-            "otherEntityName": "product",
-            "otherEntityField": "id"
         }
     ],
     "changelogDate": "20190127071051",

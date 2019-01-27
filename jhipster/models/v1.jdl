@@ -23,8 +23,8 @@ application {
  */
 entity Category {
   /** fieldName */
-  name String
-    sort Integer
+  name String,
+  sort Integer
 }
 /**
  * The Entity entity.
@@ -32,9 +32,9 @@ entity Category {
  */
 entity Product {
   /** fieldName */
-  name String
-    thumbnail String
-    description String
+  name String,
+  thumbnail String,
+  description String
 }
 /**
  * The Entity entity.
@@ -42,9 +42,9 @@ entity Product {
  */
 entity Specs {
   /** fieldName */
-  name String
-    price Double
-    stock Integer
+  name String,
+  price Double,
+  stock Integer
 }
 /**
  * The Entity entity.
@@ -52,7 +52,8 @@ entity Specs {
  */
 entity Shop {
   /** fieldName */
-  name String
+  name String,
+  description String
 }
 /**
  * The Entity entity.
@@ -60,36 +61,24 @@ entity Shop {
  */
 entity ShopOrder {
   /** fieldName */
-  orderNo String
-    totalMoney Double
+  orderNo String,
+  totalMoney Double
 }
 /**
  * The Entity entity.
  * @author A true hipster
  */
-entity OrderDetails
-
-/**
- * One to many relationship.
- */
-relationship OneToMany {
-  Product to Specs
-    Category to Product
+entity OrderDetails{
 }
 /**
  * Many to one relationship.
  */
 relationship ManyToOne {
-  Product to Shop
-    Category to Shop
-    ShopOrder to Shop
-    OrderDetails to ShopOrder
+  Specs{Product(name)} to Product , Product{category(name)} to Category , Product{shop(name)} to Shop , Category{shop(name)} to Shop , ShopOrder{shop(name)} to Shop , OrderDetails{order(orderNo)} to ShopOrder
 }
 /**
  * One to one relationship.
  */
 relationship OneToOne {
-  Shop to User
-    OrderDetails to Product
-    OrderDetails to Specs
+  Shop to User , OrderDetails to Product , OrderDetails to Specs
 }

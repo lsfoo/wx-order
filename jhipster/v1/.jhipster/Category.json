@@ -13,16 +13,10 @@
     ],
     "relationships": [
         {
-            "relationshipType": "one-to-many",
-            "relationshipName": "product",
-            "otherEntityName": "product",
-            "otherEntityRelationshipName": "category"
-        },
-        {
             "relationshipType": "many-to-one",
             "relationshipName": "shop",
             "otherEntityName": "shop",
-            "otherEntityField": "id"
+            "otherEntityField": "name"
         }
     ],
     "changelogDate": "20190127071049",

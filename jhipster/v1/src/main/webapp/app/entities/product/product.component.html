@@ -33,8 +33,8 @@
             <th><span>Name</span></th>
             <th><span>Thumbnail</span></th>
             <th><span>Description</span></th>
-            <th><span>Shop</span></th>
             <th><span>Category</span></th>
+            <th><span>Shop</span></th>
             <th></th>
             </tr>
             </thead>
@@ -45,13 +45,13 @@
                 <td>{{product.thumbnail}}</td>
                 <td>{{product.description}}</td>
                 <td>
-                    <div *ngIf="product.shop">
-                        <a [routerLink]="['../shop', product.shop?.id, 'view' ]" >{{product.shop?.id}}</a>
+                    <div *ngIf="product.category">
+                        <a [routerLink]="['../category', product.category?.id, 'view' ]" >{{product.category?.name}}</a>
                     </div>
                 </td>
                 <td>
-                    <div *ngIf="product.category">
-                        <a [routerLink]="['../category', product.category?.id, 'view' ]" >{{product.category?.id}}</a>
+                    <div *ngIf="product.shop">
+                        <a [routerLink]="['../shop', product.shop?.id, 'view' ]" >{{product.shop?.name}}</a>
                     </div>
                 </td>
                 <td class="text-right">

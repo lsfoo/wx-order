@@ -1,7 +1,6 @@
 package com.lsfoo.wx.gateway.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.Cache;
@@ -11,8 +10,6 @@ import javax.persistence.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -39,19 +36,13 @@ public class Shop implements Serializable {
     @Column(name = "name")
     private String name;
 
+    @Column(name = "description")
+    private String description;
+
     @OneToOne
     @JoinColumn(unique = true)
     private User user;
 
-    @OneToMany(mappedBy = "shop")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Product> products = new HashSet<>();
-    @OneToMany(mappedBy = "shop")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Category> categories = new HashSet<>();
-    @OneToMany(mappedBy = "shop")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<ShopOrder> shopOrders = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -74,6 +65,19 @@ public class Shop implements Serializable {
         this.name = name;
     }
 
+    public String getDescription() {
+        return description;
+    }
+
+    public Shop description(String description) {
+        this.description = description;
+        return this;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
     public User getUser() {
         return user;
     }
@@ -85,81 +89,6 @@ public class Shop implements Serializable {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public Set<Product> getProducts() {
-        return products;
-    }
-
-    public Shop products(Set<Product> products) {
-        this.products = products;
-        return this;
-    }
-
-    public Shop addProduct(Product product) {
-        this.products.add(product);
-        product.setShop(this);
-        return this;
-    }
-
-    public Shop removeProduct(Product product) {
-        this.products.remove(product);
-        product.setShop(null);
-        return this;
-    }
-
-    public void setProducts(Set<Product> products) {
-        this.products = products;
-    }
-
-    public Set<Category> getCategories() {
-        return categories;
-    }
-
-    public Shop categories(Set<Category> categories) {
-        this.categories = categories;
-        return this;
-    }
-
-    public Shop addCategory(Category category) {
-        this.categories.add(category);
-        category.setShop(this);
-        return this;
-    }
-
-    public Shop removeCategory(Category category) {
-        this.categories.remove(category);
-        category.setShop(null);
-        return this;
-    }
-
-    public void setCategories(Set<Category> categories) {
-        this.categories = categories;
-    }
-
-    public Set<ShopOrder> getShopOrders() {
-        return shopOrders;
-    }
-
-    public Shop shopOrders(Set<ShopOrder> shopOrders) {
-        this.shopOrders = shopOrders;
-        return this;
-    }
-
-    public Shop addShopOrder(ShopOrder shopOrder) {
-        this.shopOrders.add(shopOrder);
-        shopOrder.setShop(this);
-        return this;
-    }
-
-    public Shop removeShopOrder(ShopOrder shopOrder) {
-        this.shopOrders.remove(shopOrder);
-        shopOrder.setShop(null);
-        return this;
-    }
-
-    public void setShopOrders(Set<ShopOrder> shopOrders) {
-        this.shopOrders = shopOrders;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
@@ -188,6 +117,7 @@ public class Shop implements Serializable {
         return "Shop{" +
             "id=" + getId() +
             ", name='" + getName() + "'" +
+            ", description='" + getDescription() + "'" +
             "}";
     }
 }

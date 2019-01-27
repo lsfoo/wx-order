@@ -17,10 +17,10 @@
                         <a [routerLink]="['/specs', orderDetails.specs?.id, 'view']">{{orderDetails.specs?.id}}</a>
                     </div>
                 </dd>
-                <dt><span>Shop Order</span></dt>
+                <dt><span>Order</span></dt>
                 <dd>
-                    <div *ngIf="orderDetails.shopOrder">
-                        <a [routerLink]="['/shop-order', orderDetails.shopOrder?.id, 'view']">{{orderDetails.shopOrder?.id}}</a>
+                    <div *ngIf="orderDetails.order">
+                        <a [routerLink]="['/shop-order', orderDetails.order?.id, 'view']">{{orderDetails.order?.orderNo}}</a>
                     </div>
                 </dd>
             </dl>

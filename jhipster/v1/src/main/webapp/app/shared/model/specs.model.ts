@@ -1,13 +1,13 @@
-import { IOrderDetails } from 'app/shared/model/order-details.model';
 import { IProduct } from 'app/shared/model/product.model';
+import { IOrderDetails } from 'app/shared/model/order-details.model';
 
 export interface ISpecs {
     id?: number;
     name?: string;
     price?: number;
     stock?: number;
-    orderDetails?: IOrderDetails;
     product?: IProduct;
+    orderDetails?: IOrderDetails;
 }
 
 export class Specs implements ISpecs {
@@ -16,7 +16,7 @@ export class Specs implements ISpecs {
         public name?: string,
         public price?: number,
         public stock?: number,
-        public orderDetails?: IOrderDetails,
-        public product?: IProduct
+        public product?: IProduct,
+        public orderDetails?: IOrderDetails
     ) {}
 }

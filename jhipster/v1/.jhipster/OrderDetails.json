@@ -20,9 +20,9 @@
         },
         {
             "relationshipType": "many-to-one",
-            "relationshipName": "shopOrder",
+            "relationshipName": "order",
             "otherEntityName": "shopOrder",
-            "otherEntityField": "id"
+            "otherEntityField": "orderNo"
         }
     ],
     "changelogDate": "20190127071054",

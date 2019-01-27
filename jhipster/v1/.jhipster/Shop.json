@@ -5,6 +5,10 @@
             "fieldName": "name",
             "javadoc": "fieldName",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "description",
+            "fieldType": "String"
         }
     ],
     "relationships": [
@@ -14,24 +18,6 @@
             "otherEntityName": "user",
             "otherEntityField": "id",
             "ownerSide": true,
-            "otherEntityRelationshipName": "shop"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "product",
-            "otherEntityName": "product",
-            "otherEntityRelationshipName": "shop"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "category",
-            "otherEntityName": "category",
-            "otherEntityRelationshipName": "shop"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "shopOrder",
-            "otherEntityName": "shopOrder",
             "otherEntityRelationshipName": "shop"
         }
     ],

@@ -7,7 +7,7 @@ import { AppComponent } from './app.component'
 import 'hammerjs'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ListComponent } from './list/list.component'
-import { ApiModule } from '../openapi/api.module'
+import { ApiModule } from '../shared/api.module'
 import { HttpClientModule } from '@angular/common/http'
 
 @NgModule({

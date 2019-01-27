@@ -17,16 +17,16 @@
     ],
     "relationships": [
         {
-            "relationshipType": "one-to-many",
-            "relationshipName": "specs",
-            "otherEntityName": "specs",
-            "otherEntityRelationshipName": "product"
+            "relationshipType": "many-to-one",
+            "relationshipName": "category",
+            "otherEntityName": "category",
+            "otherEntityField": "name"
         },
         {
             "relationshipType": "many-to-one",
             "relationshipName": "shop",
             "otherEntityName": "shop",
-            "otherEntityField": "id"
+            "otherEntityField": "name"
         },
         {
             "relationshipType": "one-to-one",
@@ -34,12 +34,6 @@
             "otherEntityName": "orderDetails",
             "ownerSide": false,
             "otherEntityRelationshipName": "product"
-        },
-        {
-            "relationshipType": "many-to-one",
-            "relationshipName": "category",
-            "otherEntityName": "category",
-            "otherEntityField": "id"
         }
     ],
     "changelogDate": "20190127071050",

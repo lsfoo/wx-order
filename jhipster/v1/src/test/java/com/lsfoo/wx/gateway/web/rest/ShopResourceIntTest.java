@@ -47,6 +47,9 @@ public class ShopResourceIntTest {
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
+    private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
+    private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
+
     @Autowired
     private ShopRepository shopRepository;
 
@@ -97,7 +100,8 @@ public class ShopResourceIntTest {
      */
     public static Shop createEntity(EntityManager em) {
         Shop shop = new Shop()
-            .name(DEFAULT_NAME);
+            .name(DEFAULT_NAME)
+            .description(DEFAULT_DESCRIPTION);
         return shop;
     }
 
@@ -122,6 +126,7 @@ public class ShopResourceIntTest {
         assertThat(shopList).hasSize(databaseSizeBeforeCreate + 1);
         Shop testShop = shopList.get(shopList.size() - 1);
         assertThat(testShop.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testShop.getDescription()).isEqualTo(DEFAULT_DESCRIPTION);
 
         // Validate the Shop in Elasticsearch
         verify(mockShopSearchRepository, times(1)).save(testShop);
@@ -160,7 +165,8 @@ public class ShopResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(shop.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION.toString())));
     }
     
     @Test
@@ -174,7 +180,8 @@ public class ShopResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.id").value(shop.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION.toString()));
     }
 
     @Test
@@ -198,7 +205,8 @@ public class ShopResourceIntTest {
         // Disconnect from session so that the updates on updatedShop are not directly saved in db
         em.detach(updatedShop);
         updatedShop
-            .name(UPDATED_NAME);
+            .name(UPDATED_NAME)
+            .description(UPDATED_DESCRIPTION);
 
         restShopMockMvc.perform(put("/api/shops")
             .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -210,6 +218,7 @@ public class ShopResourceIntTest {
         assertThat(shopList).hasSize(databaseSizeBeforeUpdate);
         Shop testShop = shopList.get(shopList.size() - 1);
         assertThat(testShop.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testShop.getDescription()).isEqualTo(UPDATED_DESCRIPTION);
 
         // Validate the Shop in Elasticsearch
         verify(mockShopSearchRepository, times(1)).save(testShop);
@@ -269,7 +278,8 @@ public class ShopResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(shop.getId().intValue())))
-            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)));
+            .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
+            .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)));
     }
 
     @Test

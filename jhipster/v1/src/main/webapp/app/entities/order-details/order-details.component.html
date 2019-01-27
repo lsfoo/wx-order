@@ -32,7 +32,7 @@
             <th><span>ID</span></th>
             <th><span>Product</span></th>
             <th><span>Specs</span></th>
-            <th><span>Shop Order</span></th>
+            <th><span>Order</span></th>
             <th></th>
             </tr>
             </thead>
@@ -50,8 +50,8 @@
                     </div>
                 </td>
                 <td>
-                    <div *ngIf="orderDetails.shopOrder">
-                        <a [routerLink]="['../shop-order', orderDetails.shopOrder?.id, 'view' ]" >{{orderDetails.shopOrder?.id}}</a>
+                    <div *ngIf="orderDetails.order">
+                        <a [routerLink]="['../shop-order', orderDetails.order?.id, 'view' ]" >{{orderDetails.order?.orderNo}}</a>
                     </div>
                 </td>
                 <td class="text-right">

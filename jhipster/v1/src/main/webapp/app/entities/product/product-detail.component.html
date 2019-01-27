@@ -17,16 +17,16 @@
                 <dd>
                     <span>{{product.description}}</span>
                 </dd>
-                <dt><span>Shop</span></dt>
-                <dd>
-                    <div *ngIf="product.shop">
-                        <a [routerLink]="['/shop', product.shop?.id, 'view']">{{product.shop?.id}}</a>
-                    </div>
-                </dd>
                 <dt><span>Category</span></dt>
                 <dd>
                     <div *ngIf="product.category">
-                        <a [routerLink]="['/category', product.category?.id, 'view']">{{product.category?.id}}</a>
+                        <a [routerLink]="['/category', product.category?.id, 'view']">{{product.category?.name}}</a>
+                    </div>
+                </dd>
+                <dt><span>Shop</span></dt>
+                <dd>
+                    <div *ngIf="product.shop">
+                        <a [routerLink]="['/shop', product.shop?.id, 'view']">{{product.shop?.name}}</a>
                     </div>
                 </dd>
             </dl>

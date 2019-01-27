@@ -39,7 +39,7 @@ public class OrderDetails implements Serializable {
 
     @ManyToOne
     @JsonIgnoreProperties("orderDetails")
-    private ShopOrder shopOrder;
+    private ShopOrder order;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -76,17 +76,17 @@ public class OrderDetails implements Serializable {
         this.specs = specs;
     }
 
-    public ShopOrder getShopOrder() {
-        return shopOrder;
+    public ShopOrder getOrder() {
+        return order;
     }
 
-    public OrderDetails shopOrder(ShopOrder shopOrder) {
-        this.shopOrder = shopOrder;
+    public OrderDetails order(ShopOrder shopOrder) {
+        this.order = shopOrder;
         return this;
     }
 
-    public void setShopOrder(ShopOrder shopOrder) {
-        this.shopOrder = shopOrder;
+    public void setOrder(ShopOrder shopOrder) {
+        this.order = shopOrder;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

@@ -20,9 +20,9 @@
                                  referencedColumnNames="id"
                                  referencedTableName="specs"/>
 
-        <addForeignKeyConstraint baseColumnNames="shop_order_id"
+        <addForeignKeyConstraint baseColumnNames="order_id"
                                  baseTableName="order_details"
-                                 constraintName="fk_order_details_shop_order_id"
+                                 constraintName="fk_order_details_order_id"
                                  referencedColumnNames="id"
                                  referencedTableName="shop_order"/>
 

@@ -24,7 +24,7 @@
                     <label class="form-control-label" for="field_shop">Shop</label>
                     <select class="form-control" id="field_shop" name="shop" [(ngModel)]="shopOrder.shop" >
                         <option [ngValue]="null"></option>
-                        <option [ngValue]="shopOption.id === shopOrder.shop?.id ? shopOrder.shop : shopOption" *ngFor="let shopOption of shops; trackBy: trackShopById">{{shopOption.id}}</option>
+                        <option [ngValue]="shopOption.id === shopOrder.shop?.id ? shopOrder.shop : shopOption" *ngFor="let shopOption of shops; trackBy: trackShopById">{{shopOption.name}}</option>
                     </select>
                 </div>
             </div>

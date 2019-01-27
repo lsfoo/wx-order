@@ -12,8 +12,6 @@ import javax.persistence.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -46,9 +44,10 @@ public class Product implements Serializable {
     @Column(name = "description")
     private String description;
 
-    @OneToMany(mappedBy = "product")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<Specs> specs = new HashSet<>();
+    @ManyToOne
+    @JsonIgnoreProperties("products")
+    private Category category;
+
     @ManyToOne
     @JsonIgnoreProperties("products")
     private Shop shop;
@@ -56,10 +55,6 @@ public class Product implements Serializable {
     @OneToOne(mappedBy = "product")
     @JsonIgnore
     private OrderDetails orderDetails;
-
-    @ManyToOne
-    @JsonIgnoreProperties("products")
-    private Category category;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
@@ -109,29 +104,17 @@ public class Product implements Serializable {
         this.description = description;
     }
 
-    public Set<Specs> getSpecs() {
-        return specs;
+    public Category getCategory() {
+        return category;
     }
 
-    public Product specs(Set<Specs> specs) {
-        this.specs = specs;
+    public Product category(Category category) {
+        this.category = category;
         return this;
     }
 
-    public Product addSpecs(Specs specs) {
-        this.specs.add(specs);
-        specs.setProduct(this);
-        return this;
-    }
-
-    public Product removeSpecs(Specs specs) {
-        this.specs.remove(specs);
-        specs.setProduct(null);
-        return this;
-    }
-
-    public void setSpecs(Set<Specs> specs) {
-        this.specs = specs;
+    public void setCategory(Category category) {
+        this.category = category;
     }
 
     public Shop getShop() {
@@ -158,19 +141,6 @@ public class Product implements Serializable {
 
     public void setOrderDetails(OrderDetails orderDetails) {
         this.orderDetails = orderDetails;
-    }
-
-    public Category getCategory() {
-        return category;
-    }
-
-    public Product category(Category category) {
-        this.category = category;
-        return this;
-    }
-
-    public void setCategory(Category category) {
-        this.category = category;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 

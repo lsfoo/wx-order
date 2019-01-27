@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core'
-import { Category, CategoryResourceService } from 'src/openapi'
+import { CategoryResourceService, Category } from 'src/shared';
 
 @Component({
   selector: 'app-list',

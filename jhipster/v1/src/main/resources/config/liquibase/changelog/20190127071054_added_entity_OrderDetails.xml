@@ -26,7 +26,7 @@
             </column>            <column name="specs_id" type="bigint">
                 <constraints unique="true" nullable="true" uniqueConstraintName="ux_order_details_specs_id" />
             </column>
-            <column name="shop_order_id" type="bigint">
+            <column name="order_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

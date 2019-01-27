@@ -43,7 +43,7 @@
                 <td>{{category.sort}}</td>
                 <td>
                     <div *ngIf="category.shop">
-                        <a [routerLink]="['../shop', category.shop?.id, 'view' ]" >{{category.shop?.id}}</a>
+                        <a [routerLink]="['../shop', category.shop?.id, 'view' ]" >{{category.shop?.name}}</a>
                     </div>
                 </td>
                 <td class="text-right">

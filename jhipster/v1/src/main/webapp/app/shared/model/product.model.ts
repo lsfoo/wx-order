@@ -1,17 +1,15 @@
-import { ISpecs } from 'app/shared/model/specs.model';
+import { ICategory } from 'app/shared/model/category.model';
 import { IShop } from 'app/shared/model/shop.model';
 import { IOrderDetails } from 'app/shared/model/order-details.model';
-import { ICategory } from 'app/shared/model/category.model';
 
 export interface IProduct {
     id?: number;
     name?: string;
     thumbnail?: string;
     description?: string;
-    specs?: ISpecs[];
+    category?: ICategory;
     shop?: IShop;
     orderDetails?: IOrderDetails;
-    category?: ICategory;
 }
 
 export class Product implements IProduct {
@@ -20,9 +18,8 @@ export class Product implements IProduct {
         public name?: string,
         public thumbnail?: string,
         public description?: string,
-        public specs?: ISpecs[],
+        public category?: ICategory,
         public shop?: IShop,
-        public orderDetails?: IOrderDetails,
-        public category?: ICategory
+        public orderDetails?: IOrderDetails
     ) {}
 }

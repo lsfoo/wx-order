@@ -16,13 +16,7 @@
             "relationshipType": "many-to-one",
             "relationshipName": "shop",
             "otherEntityName": "shop",
-            "otherEntityField": "id"
-        },
-        {
-            "relationshipType": "one-to-many",
-            "relationshipName": "orderDetails",
-            "otherEntityName": "orderDetails",
-            "otherEntityRelationshipName": "shopOrder"
+            "otherEntityField": "name"
         }
     ],
     "changelogDate": "20190127071053",

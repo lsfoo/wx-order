@@ -39,16 +39,10 @@ public class CacheConfiguration {
             cm.createCache(com.lsfoo.wx.gateway.domain.Authority.class.getName(), jcacheConfiguration);
             cm.createCache(com.lsfoo.wx.gateway.domain.User.class.getName() + ".authorities", jcacheConfiguration);
             cm.createCache(com.lsfoo.wx.gateway.domain.Category.class.getName(), jcacheConfiguration);
-            cm.createCache(com.lsfoo.wx.gateway.domain.Category.class.getName() + ".products", jcacheConfiguration);
             cm.createCache(com.lsfoo.wx.gateway.domain.Product.class.getName(), jcacheConfiguration);
-            cm.createCache(com.lsfoo.wx.gateway.domain.Product.class.getName() + ".specs", jcacheConfiguration);
             cm.createCache(com.lsfoo.wx.gateway.domain.Specs.class.getName(), jcacheConfiguration);
             cm.createCache(com.lsfoo.wx.gateway.domain.Shop.class.getName(), jcacheConfiguration);
-            cm.createCache(com.lsfoo.wx.gateway.domain.Shop.class.getName() + ".products", jcacheConfiguration);
-            cm.createCache(com.lsfoo.wx.gateway.domain.Shop.class.getName() + ".categories", jcacheConfiguration);
-            cm.createCache(com.lsfoo.wx.gateway.domain.Shop.class.getName() + ".shopOrders", jcacheConfiguration);
             cm.createCache(com.lsfoo.wx.gateway.domain.ShopOrder.class.getName(), jcacheConfiguration);
-            cm.createCache(com.lsfoo.wx.gateway.domain.ShopOrder.class.getName() + ".orderDetails", jcacheConfiguration);
             cm.createCache(com.lsfoo.wx.gateway.domain.OrderDetails.class.getName(), jcacheConfiguration);
             // jhipster-needle-ehcache-add-entry
         };

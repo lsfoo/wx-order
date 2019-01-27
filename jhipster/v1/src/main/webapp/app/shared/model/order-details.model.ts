@@ -6,9 +6,9 @@ export interface IOrderDetails {
     id?: number;
     product?: IProduct;
     specs?: ISpecs;
-    shopOrder?: IShopOrder;
+    order?: IShopOrder;
 }
 
 export class OrderDetails implements IOrderDetails {
-    constructor(public id?: number, public product?: IProduct, public specs?: ISpecs, public shopOrder?: IShopOrder) {}
+    constructor(public id?: number, public product?: IProduct, public specs?: ISpecs, public order?: IShopOrder) {}
 }

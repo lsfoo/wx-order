@@ -6,12 +6,12 @@ import { filter, map } from 'rxjs/operators';
 import { JhiAlertService } from 'ng-jhipster';
 import { IProduct } from 'app/shared/model/product.model';
 import { ProductService } from './product.service';
+import { ICategory } from 'app/shared/model/category.model';
+import { CategoryService } from 'app/entities/category';
 import { IShop } from 'app/shared/model/shop.model';
 import { ShopService } from 'app/entities/shop';
 import { IOrderDetails } from 'app/shared/model/order-details.model';
 import { OrderDetailsService } from 'app/entities/order-details';
-import { ICategory } from 'app/shared/model/category.model';
-import { CategoryService } from 'app/entities/category';
 
 @Component({
     selector: 'jhi-product-update',
@@ -21,18 +21,18 @@ export class ProductUpdateComponent implements OnInit {
     product: IProduct;
     isSaving: boolean;
 
+    categories: ICategory[];
+
     shops: IShop[];
 
     orderdetails: IOrderDetails[];
 
-    categories: ICategory[];
-
     constructor(
         protected jhiAlertService: JhiAlertService,
         protected productService: ProductService,
+        protected categoryService: CategoryService,
         protected shopService: ShopService,
         protected orderDetailsService: OrderDetailsService,
-        protected categoryService: CategoryService,
         protected activatedRoute: ActivatedRoute
     ) {}
 
@@ -41,6 +41,13 @@ export class ProductUpdateComponent implements OnInit {
         this.activatedRoute.data.subscribe(({ product }) => {
             this.product = product;
         });
+        this.categoryService
+            .query()
+            .pipe(
+                filter((mayBeOk: HttpResponse<ICategory[]>) => mayBeOk.ok),
+                map((response: HttpResponse<ICategory[]>) => response.body)
+            )
+            .subscribe((res: ICategory[]) => (this.categories = res), (res: HttpErrorResponse) => this.onError(res.message));
         this.shopService
             .query()
             .pipe(
@@ -55,13 +62,6 @@ export class ProductUpdateComponent implements OnInit {
                 map((response: HttpResponse<IOrderDetails[]>) => response.body)
             )
             .subscribe((res: IOrderDetails[]) => (this.orderdetails = res), (res: HttpErrorResponse) => this.onError(res.message));
-        this.categoryService
-            .query()
-            .pipe(
-                filter((mayBeOk: HttpResponse<ICategory[]>) => mayBeOk.ok),
-                map((response: HttpResponse<ICategory[]>) => response.body)
-            )
-            .subscribe((res: ICategory[]) => (this.categories = res), (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     previousState() {
@@ -94,15 +94,15 @@ export class ProductUpdateComponent implements OnInit {
         this.jhiAlertService.error(errorMessage, null, null);
     }
 
+    trackCategoryById(index: number, item: ICategory) {
+        return item.id;
+    }
+
     trackShopById(index: number, item: IShop) {
         return item.id;
     }
 
     trackOrderDetailsById(index: number, item: IOrderDetails) {
-        return item.id;
-    }
-
-    trackCategoryById(index: number, item: ICategory) {
         return item.id;
     }
 }

@@ -1,7 +1,6 @@
 package com.lsfoo.wx.gateway.domain;
 
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -12,8 +11,6 @@ import javax.persistence.*;
 
 import org.springframework.data.elasticsearch.annotations.Document;
 import java.io.Serializable;
-import java.util.HashSet;
-import java.util.Set;
 import java.util.Objects;
 
 /**
@@ -47,9 +44,6 @@ public class ShopOrder implements Serializable {
     @JsonIgnoreProperties("shopOrders")
     private Shop shop;
 
-    @OneToMany(mappedBy = "shopOrder")
-    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-    private Set<OrderDetails> orderDetails = new HashSet<>();
     // jhipster-needle-entity-add-field - JHipster will add fields here, do not remove
     public Long getId() {
         return id;
@@ -96,31 +90,6 @@ public class ShopOrder implements Serializable {
 
     public void setShop(Shop shop) {
         this.shop = shop;
-    }
-
-    public Set<OrderDetails> getOrderDetails() {
-        return orderDetails;
-    }
-
-    public ShopOrder orderDetails(Set<OrderDetails> orderDetails) {
-        this.orderDetails = orderDetails;
-        return this;
-    }
-
-    public ShopOrder addOrderDetails(OrderDetails orderDetails) {
-        this.orderDetails.add(orderDetails);
-        orderDetails.setShopOrder(this);
-        return this;
-    }
-
-    public ShopOrder removeOrderDetails(OrderDetails orderDetails) {
-        this.orderDetails.remove(orderDetails);
-        orderDetails.setShopOrder(null);
-        return this;
-    }
-
-    public void setOrderDetails(Set<OrderDetails> orderDetails) {
-        this.orderDetails = orderDetails;
     }
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here, do not remove
 
