@@ -1,0 +1,40 @@
+{
+    "name": "ShopOrder",
+    "fields": [
+        {
+            "fieldName": "orderNo",
+            "javadoc": "fieldName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "totalMoney",
+            "fieldType": "Double"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "shop",
+            "otherEntityName": "shop",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipType": "one-to-many",
+            "relationshipName": "orderDetails",
+            "otherEntityName": "orderDetails",
+            "otherEntityRelationshipName": "shopOrder"
+        }
+    ],
+    "changelogDate": "20190127033337",
+    "javadoc": "The Entity entity.\n@author A true hipster",
+    "entityTableName": "shop_order",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": [
+        "gateway"
+    ]
+}
