@@ -36,7 +36,7 @@
             "otherEntityRelationshipName": "product"
         }
     ],
-    "changelogDate": "20190127071050",
+    "changelogDate": "20190127090007",
     "javadoc": "The Entity entity.\n@author A true hipster",
     "entityTableName": "product",
     "dto": "no",

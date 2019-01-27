@@ -6,7 +6,7 @@
     <!--
         Added the constraints for entity Specs.
     -->
-    <changeSet id="20190127071051-2" author="jhipster">
+    <changeSet id="20190127090008-2" author="jhipster">
         
         <addForeignKeyConstraint baseColumnNames="product_id"
                                  baseTableName="specs"

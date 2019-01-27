@@ -25,7 +25,7 @@
             "otherEntityField": "orderNo"
         }
     ],
-    "changelogDate": "20190127071054",
+    "changelogDate": "20190127090011",
     "javadoc": "The Entity entity.\n@author A true hipster",
     "entityTableName": "order_details",
     "dto": "no",

@@ -21,7 +21,7 @@
             "otherEntityRelationshipName": "shop"
         }
     ],
-    "changelogDate": "20190127071052",
+    "changelogDate": "20190127090009",
     "javadoc": "The Entity entity.\n@author A true hipster",
     "entityTableName": "shop",
     "dto": "no",

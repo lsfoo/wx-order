@@ -15,10 +15,10 @@
     <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
 
     <!--
-        Added the entity Category.
+        Added the entity Specs.
     -->
-    <changeSet id="20190127071049-1" author="jhipster">
-        <createTable tableName="category" remarks="The Entity entity. @author A true hipster">
+    <changeSet id="20190127090008-1" author="jhipster">
+        <createTable tableName="specs" remarks="The Entity entity. @author A true hipster">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
@@ -26,11 +26,15 @@
                 <constraints nullable="true" />
             </column>
 
-            <column name="jhi_sort" type="integer">
+            <column name="price" type="double">
                 <constraints nullable="true" />
             </column>
 
-            <column name="shop_id" type="bigint">
+            <column name="stock" type="integer">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="product_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 

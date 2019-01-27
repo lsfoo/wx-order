@@ -15,18 +15,22 @@
     <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
 
     <!--
-        Added the entity OrderDetails.
+        Added the entity ShopOrder.
     -->
-    <changeSet id="20190127071054-1" author="jhipster">
-        <createTable tableName="order_details" remarks="The Entity entity. @author A true hipster">
+    <changeSet id="20190127090010-1" author="jhipster">
+        <createTable tableName="shop_order" remarks="The Entity entity. @author A true hipster">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
-            </column>            <column name="product_id" type="bigint">
-                <constraints unique="true" nullable="true" uniqueConstraintName="ux_order_details_product_id" />
-            </column>            <column name="specs_id" type="bigint">
-                <constraints unique="true" nullable="true" uniqueConstraintName="ux_order_details_specs_id" />
             </column>
-            <column name="order_id" type="bigint">
+            <column name="order_no" type="varchar(255)" remarks="fieldName">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="total_money" type="double">
+                <constraints nullable="true" />
+            </column>
+
+            <column name="shop_id" type="bigint">
                 <constraints nullable="true" />
             </column>
 
