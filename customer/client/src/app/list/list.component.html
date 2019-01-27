@@ -1,6 +1,36 @@
 <div fxLayout="row" fxLayoutAlign="start stretch" fxLayoutGap="gappx" style="height:100%">
   <div fxFlex="59%">
-    kdk
+    <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="10px">
+      <div *ngFor="let item of products" fxLayout="row" fxLayoutAlign="start start" fxLayoutGap="gappx">
+        <div fxFlex="41%">
+
+          <img style="width: 100%" src="{{item.thumbnail}}" alt="" srcset="">
+
+        </div>
+        <div fxFlex="59%">
+          <div fxLayout="column" fxLayoutAlign="start stretch" fxLayoutGap="gappx">
+            <p>
+              {{item.name}}
+            </p>
+            <p>
+              {{item.description}}
+              <div fxLayout="row" fxLayoutAlign="end center" fxLayoutGap="10px">
+
+                <i class="fa fa-minus-square-o" aria-hidden="true"></i>
+                <span>
+                  0
+                </span>
+                <i class="fa fa-plus-square-o" aria-hidden="true"></i>
+
+              </div>
+          </div>
+
+        </div>
+
+      </div>
+
+
+    </div>
   </div>
   <div fxFlex="41%">
     <div fxLayout="column" fxLayoutAlign="center stretch" fxLayoutGap="10px">
