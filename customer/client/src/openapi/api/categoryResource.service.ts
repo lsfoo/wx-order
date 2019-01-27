@@ -30,7 +30,7 @@ import { Configuration } from '../configuration'
 
 @Injectable()
 export class CategoryResourceService {
-  protected basePath = 'localhost:8080'
+  protected basePath = 'http://localhost:8080'
   public defaultHeaders = new HttpHeaders()
   public configuration = new Configuration()
 
