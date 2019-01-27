@@ -16,7 +16,7 @@ import { ICategory } from 'app/shared/model/category.model';
 export class CategoryResolve implements Resolve<ICategory> {
     constructor(private service: CategoryService) {}
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Category> {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ICategory> {
         const id = route.params['id'] ? route.params['id'] : null;
         if (id) {
             return this.service.find(id).pipe(
@@ -30,7 +30,7 @@ export class CategoryResolve implements Resolve<ICategory> {
 
 export const categoryRoute: Routes = [
     {
-        path: 'category',
+        path: '',
         component: CategoryComponent,
         data: {
             authorities: ['ROLE_USER'],
@@ -39,7 +39,7 @@ export const categoryRoute: Routes = [
         canActivate: [UserRouteAccessService]
     },
     {
-        path: 'category/:id/view',
+        path: ':id/view',
         component: CategoryDetailComponent,
         resolve: {
             category: CategoryResolve
@@ -51,7 +51,7 @@ export const categoryRoute: Routes = [
         canActivate: [UserRouteAccessService]
     },
     {
-        path: 'category/new',
+        path: 'new',
         component: CategoryUpdateComponent,
         resolve: {
             category: CategoryResolve
@@ -63,7 +63,7 @@ export const categoryRoute: Routes = [
         canActivate: [UserRouteAccessService]
     },
     {
-        path: 'category/:id/edit',
+        path: ':id/edit',
         component: CategoryUpdateComponent,
         resolve: {
             category: CategoryResolve
@@ -78,7 +78,7 @@ export const categoryRoute: Routes = [
 
 export const categoryPopupRoute: Routes = [
     {
-        path: 'category/:id/delete',
+        path: ':id/delete',
         component: CategoryDeletePopupComponent,
         resolve: {
             category: CategoryResolve

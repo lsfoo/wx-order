@@ -1,6 +1,4 @@
 package com.lsfoo.wx.gateway.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import com.lsfoo.wx.gateway.domain.Category;
 import com.lsfoo.wx.gateway.repository.CategoryRepository;
 import com.lsfoo.wx.gateway.repository.search.CategorySearchRepository;
@@ -50,7 +48,6 @@ public class CategoryResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/categories")
-    @Timed
     public ResponseEntity<Category> createCategory(@RequestBody Category category) throws URISyntaxException {
         log.debug("REST request to save Category : {}", category);
         if (category.getId() != null) {
@@ -73,7 +70,6 @@ public class CategoryResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/categories")
-    @Timed
     public ResponseEntity<Category> updateCategory(@RequestBody Category category) throws URISyntaxException {
         log.debug("REST request to update Category : {}", category);
         if (category.getId() == null) {
@@ -92,7 +88,6 @@ public class CategoryResource {
      * @return the ResponseEntity with status 200 (OK) and the list of categories in body
      */
     @GetMapping("/categories")
-    @Timed
     public List<Category> getAllCategories() {
         log.debug("REST request to get all Categories");
         return categoryRepository.findAll();
@@ -105,7 +100,6 @@ public class CategoryResource {
      * @return the ResponseEntity with status 200 (OK) and with body the category, or with status 404 (Not Found)
      */
     @GetMapping("/categories/{id}")
-    @Timed
     public ResponseEntity<Category> getCategory(@PathVariable Long id) {
         log.debug("REST request to get Category : {}", id);
         Optional<Category> category = categoryRepository.findById(id);
@@ -119,10 +113,8 @@ public class CategoryResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/categories/{id}")
-    @Timed
     public ResponseEntity<Void> deleteCategory(@PathVariable Long id) {
         log.debug("REST request to delete Category : {}", id);
-
         categoryRepository.deleteById(id);
         categorySearchRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
@@ -136,7 +128,6 @@ public class CategoryResource {
      * @return the result of the search
      */
     @GetMapping("/_search/categories")
-    @Timed
     public List<Category> searchCategories(@RequestParam String query) {
         log.debug("REST request to search Categories for query {}", query);
         return StreamSupport

@@ -24,7 +24,7 @@
     "baseName": "gateway",
     "applicationType": "monolith",
     "authenticationType": "jwt",
-    "jhipsterVersion": "5.7.2",
+    "jhipsterVersion": "5.8.0",
     "buildTool": "maven",
     "skipUserManagement": false,
     "clientPackageManager": "npm",
@@ -32,7 +32,9 @@
     "clientFramework": "angularX",
     "serverPort": "8080",
     "useSass": true,
-    "jwtSecretKey": "YTJlOTc0OWEzYzJhMDc4Y2IxN2FlZjg3MGNlZDRmNDk4MjZjMmRkYzNmYzkyMTkwZjJlNTE2ZTg0NjQ0N2Q2M2IyZjYyNWIxM2I0MDVjZmY4NDYxNmQyZDVmOWY1YmZmZTA5ZTI5YmI0YjE4MDgzZTYzYTk1NGFhMTBhZDg1OWY=",
+    "jwtSecretKey": "N2Q4NTY4MDg2ZWI3YTU4NThmNTVmZjRiYjdjNzExN2EyNDJiMDE4Nzg0NThiMmQ2NWJmMjI0NGFhOWQ1MDMxZmMzZDI2NzQ2ODg0MTVkMGQ5NGQ4NThlNjU1NTc1MzcxMjc3MTZhNmYzZWI3ZjdmZWQxNmQ3NzZiY2RiZTMwZWM=",
+    "entitySuffix": "",
+    "dtoSuffix": "DTO",
     "otherModules": []
   },
   "entities": [

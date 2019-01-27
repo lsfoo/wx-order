@@ -16,7 +16,7 @@ import { IShopOrder } from 'app/shared/model/shop-order.model';
 export class ShopOrderResolve implements Resolve<IShopOrder> {
     constructor(private service: ShopOrderService) {}
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ShopOrder> {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IShopOrder> {
         const id = route.params['id'] ? route.params['id'] : null;
         if (id) {
             return this.service.find(id).pipe(
@@ -30,7 +30,7 @@ export class ShopOrderResolve implements Resolve<IShopOrder> {
 
 export const shopOrderRoute: Routes = [
     {
-        path: 'shop-order',
+        path: '',
         component: ShopOrderComponent,
         data: {
             authorities: ['ROLE_USER'],
@@ -39,7 +39,7 @@ export const shopOrderRoute: Routes = [
         canActivate: [UserRouteAccessService]
     },
     {
-        path: 'shop-order/:id/view',
+        path: ':id/view',
         component: ShopOrderDetailComponent,
         resolve: {
             shopOrder: ShopOrderResolve
@@ -51,7 +51,7 @@ export const shopOrderRoute: Routes = [
         canActivate: [UserRouteAccessService]
     },
     {
-        path: 'shop-order/new',
+        path: 'new',
         component: ShopOrderUpdateComponent,
         resolve: {
             shopOrder: ShopOrderResolve
@@ -63,7 +63,7 @@ export const shopOrderRoute: Routes = [
         canActivate: [UserRouteAccessService]
     },
     {
-        path: 'shop-order/:id/edit',
+        path: ':id/edit',
         component: ShopOrderUpdateComponent,
         resolve: {
             shopOrder: ShopOrderResolve
@@ -78,7 +78,7 @@ export const shopOrderRoute: Routes = [
 
 export const shopOrderPopupRoute: Routes = [
     {
-        path: 'shop-order/:id/delete',
+        path: ':id/delete',
         component: ShopOrderDeletePopupComponent,
         resolve: {
             shopOrder: ShopOrderResolve

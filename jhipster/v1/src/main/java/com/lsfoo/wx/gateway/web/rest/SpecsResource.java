@@ -1,6 +1,4 @@
 package com.lsfoo.wx.gateway.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import com.lsfoo.wx.gateway.domain.Specs;
 import com.lsfoo.wx.gateway.repository.SpecsRepository;
 import com.lsfoo.wx.gateway.repository.search.SpecsSearchRepository;
@@ -50,7 +48,6 @@ public class SpecsResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/specs")
-    @Timed
     public ResponseEntity<Specs> createSpecs(@RequestBody Specs specs) throws URISyntaxException {
         log.debug("REST request to save Specs : {}", specs);
         if (specs.getId() != null) {
@@ -73,7 +70,6 @@ public class SpecsResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/specs")
-    @Timed
     public ResponseEntity<Specs> updateSpecs(@RequestBody Specs specs) throws URISyntaxException {
         log.debug("REST request to update Specs : {}", specs);
         if (specs.getId() == null) {
@@ -93,7 +89,6 @@ public class SpecsResource {
      * @return the ResponseEntity with status 200 (OK) and the list of specs in body
      */
     @GetMapping("/specs")
-    @Timed
     public List<Specs> getAllSpecs(@RequestParam(required = false) String filter) {
         if ("orderdetails-is-null".equals(filter)) {
             log.debug("REST request to get all Specss where orderDetails is null");
@@ -113,7 +108,6 @@ public class SpecsResource {
      * @return the ResponseEntity with status 200 (OK) and with body the specs, or with status 404 (Not Found)
      */
     @GetMapping("/specs/{id}")
-    @Timed
     public ResponseEntity<Specs> getSpecs(@PathVariable Long id) {
         log.debug("REST request to get Specs : {}", id);
         Optional<Specs> specs = specsRepository.findById(id);
@@ -127,10 +121,8 @@ public class SpecsResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/specs/{id}")
-    @Timed
     public ResponseEntity<Void> deleteSpecs(@PathVariable Long id) {
         log.debug("REST request to delete Specs : {}", id);
-
         specsRepository.deleteById(id);
         specsSearchRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
@@ -144,7 +136,6 @@ public class SpecsResource {
      * @return the result of the search
      */
     @GetMapping("/_search/specs")
-    @Timed
     public List<Specs> searchSpecs(@RequestParam String query) {
         log.debug("REST request to search Specs for query {}", query);
         return StreamSupport

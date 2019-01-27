@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 import { JhiAlertService } from 'ng-jhipster';
-
 import { ICategory } from 'app/shared/model/category.model';
 import { CategoryService } from './category.service';
 import { IShop } from 'app/shared/model/shop.model';
@@ -31,12 +31,13 @@ export class CategoryUpdateComponent implements OnInit {
         this.activatedRoute.data.subscribe(({ category }) => {
             this.category = category;
         });
-        this.shopService.query().subscribe(
-            (res: HttpResponse<IShop[]>) => {
-                this.shops = res.body;
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
+        this.shopService
+            .query()
+            .pipe(
+                filter((mayBeOk: HttpResponse<IShop[]>) => mayBeOk.ok),
+                map((response: HttpResponse<IShop[]>) => response.body)
+            )
+            .subscribe((res: IShop[]) => (this.shops = res), (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     previousState() {

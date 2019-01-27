@@ -1,7 +1,7 @@
-import { ISpecs } from 'app/shared/model//specs.model';
-import { IShop } from 'app/shared/model//shop.model';
-import { IOrderDetails } from 'app/shared/model//order-details.model';
-import { ICategory } from 'app/shared/model//category.model';
+import { ISpecs } from 'app/shared/model/specs.model';
+import { IShop } from 'app/shared/model/shop.model';
+import { IOrderDetails } from 'app/shared/model/order-details.model';
+import { ICategory } from 'app/shared/model/category.model';
 
 export interface IProduct {
     id?: number;

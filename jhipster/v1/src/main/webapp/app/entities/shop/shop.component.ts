@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { IShop } from 'app/shared/model/shop.model';
@@ -37,16 +38,26 @@ export class ShopComponent implements OnInit, OnDestroy {
                 .search({
                     query: this.currentSearch
                 })
-                .subscribe((res: HttpResponse<IShop[]>) => (this.shops = res.body), (res: HttpErrorResponse) => this.onError(res.message));
+                .pipe(
+                    filter((res: HttpResponse<IShop[]>) => res.ok),
+                    map((res: HttpResponse<IShop[]>) => res.body)
+                )
+                .subscribe((res: IShop[]) => (this.shops = res), (res: HttpErrorResponse) => this.onError(res.message));
             return;
         }
-        this.shopService.query().subscribe(
-            (res: HttpResponse<IShop[]>) => {
-                this.shops = res.body;
-                this.currentSearch = '';
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
+        this.shopService
+            .query()
+            .pipe(
+                filter((res: HttpResponse<IShop[]>) => res.ok),
+                map((res: HttpResponse<IShop[]>) => res.body)
+            )
+            .subscribe(
+                (res: IShop[]) => {
+                    this.shops = res;
+                    this.currentSearch = '';
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
     }
 
     search(query) {

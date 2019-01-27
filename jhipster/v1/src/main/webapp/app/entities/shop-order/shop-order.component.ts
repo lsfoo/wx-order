@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { IShopOrder } from 'app/shared/model/shop-order.model';
@@ -37,19 +38,26 @@ export class ShopOrderComponent implements OnInit, OnDestroy {
                 .search({
                     query: this.currentSearch
                 })
-                .subscribe(
-                    (res: HttpResponse<IShopOrder[]>) => (this.shopOrders = res.body),
-                    (res: HttpErrorResponse) => this.onError(res.message)
-                );
+                .pipe(
+                    filter((res: HttpResponse<IShopOrder[]>) => res.ok),
+                    map((res: HttpResponse<IShopOrder[]>) => res.body)
+                )
+                .subscribe((res: IShopOrder[]) => (this.shopOrders = res), (res: HttpErrorResponse) => this.onError(res.message));
             return;
         }
-        this.shopOrderService.query().subscribe(
-            (res: HttpResponse<IShopOrder[]>) => {
-                this.shopOrders = res.body;
-                this.currentSearch = '';
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
+        this.shopOrderService
+            .query()
+            .pipe(
+                filter((res: HttpResponse<IShopOrder[]>) => res.ok),
+                map((res: HttpResponse<IShopOrder[]>) => res.body)
+            )
+            .subscribe(
+                (res: IShopOrder[]) => {
+                    this.shopOrders = res;
+                    this.currentSearch = '';
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
     }
 
     search(query) {

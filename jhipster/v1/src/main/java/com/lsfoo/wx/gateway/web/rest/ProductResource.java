@@ -1,6 +1,4 @@
 package com.lsfoo.wx.gateway.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import com.lsfoo.wx.gateway.domain.Product;
 import com.lsfoo.wx.gateway.repository.ProductRepository;
 import com.lsfoo.wx.gateway.repository.search.ProductSearchRepository;
@@ -50,7 +48,6 @@ public class ProductResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/products")
-    @Timed
     public ResponseEntity<Product> createProduct(@RequestBody Product product) throws URISyntaxException {
         log.debug("REST request to save Product : {}", product);
         if (product.getId() != null) {
@@ -73,7 +70,6 @@ public class ProductResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/products")
-    @Timed
     public ResponseEntity<Product> updateProduct(@RequestBody Product product) throws URISyntaxException {
         log.debug("REST request to update Product : {}", product);
         if (product.getId() == null) {
@@ -93,7 +89,6 @@ public class ProductResource {
      * @return the ResponseEntity with status 200 (OK) and the list of products in body
      */
     @GetMapping("/products")
-    @Timed
     public List<Product> getAllProducts(@RequestParam(required = false) String filter) {
         if ("orderdetails-is-null".equals(filter)) {
             log.debug("REST request to get all Products where orderDetails is null");
@@ -113,7 +108,6 @@ public class ProductResource {
      * @return the ResponseEntity with status 200 (OK) and with body the product, or with status 404 (Not Found)
      */
     @GetMapping("/products/{id}")
-    @Timed
     public ResponseEntity<Product> getProduct(@PathVariable Long id) {
         log.debug("REST request to get Product : {}", id);
         Optional<Product> product = productRepository.findById(id);
@@ -127,10 +121,8 @@ public class ProductResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/products/{id}")
-    @Timed
     public ResponseEntity<Void> deleteProduct(@PathVariable Long id) {
         log.debug("REST request to delete Product : {}", id);
-
         productRepository.deleteById(id);
         productSearchRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
@@ -144,7 +136,6 @@ public class ProductResource {
      * @return the result of the search
      */
     @GetMapping("/_search/products")
-    @Timed
     public List<Product> searchProducts(@RequestParam String query) {
         log.debug("REST request to search Products for query {}", query);
         return StreamSupport

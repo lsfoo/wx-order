@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { ISpecs } from 'app/shared/model/specs.model';
@@ -37,16 +38,26 @@ export class SpecsComponent implements OnInit, OnDestroy {
                 .search({
                     query: this.currentSearch
                 })
-                .subscribe((res: HttpResponse<ISpecs[]>) => (this.specs = res.body), (res: HttpErrorResponse) => this.onError(res.message));
+                .pipe(
+                    filter((res: HttpResponse<ISpecs[]>) => res.ok),
+                    map((res: HttpResponse<ISpecs[]>) => res.body)
+                )
+                .subscribe((res: ISpecs[]) => (this.specs = res), (res: HttpErrorResponse) => this.onError(res.message));
             return;
         }
-        this.specsService.query().subscribe(
-            (res: HttpResponse<ISpecs[]>) => {
-                this.specs = res.body;
-                this.currentSearch = '';
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
+        this.specsService
+            .query()
+            .pipe(
+                filter((res: HttpResponse<ISpecs[]>) => res.ok),
+                map((res: HttpResponse<ISpecs[]>) => res.body)
+            )
+            .subscribe(
+                (res: ISpecs[]) => {
+                    this.specs = res;
+                    this.currentSearch = '';
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
     }
 
     search(query) {

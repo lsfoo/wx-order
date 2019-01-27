@@ -1,5 +1,5 @@
-import { IOrderDetails } from 'app/shared/model//order-details.model';
-import { IProduct } from 'app/shared/model//product.model';
+import { IOrderDetails } from 'app/shared/model/order-details.model';
+import { IProduct } from 'app/shared/model/product.model';
 
 export interface ISpecs {
     id?: number;

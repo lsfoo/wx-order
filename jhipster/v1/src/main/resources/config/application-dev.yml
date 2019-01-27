@@ -41,6 +41,7 @@ spring:
         username: gateway
         password:
         hikari:
+            poolName: Hikari
             auto-commit: false
     h2:
         console:
@@ -101,19 +102,15 @@ jhipster:
         authentication:
             jwt:
                 # This token must be encoded using Base64 and be at least 256 bits long (you can type `openssl rand -base64 64` on your command line to generate a 512 bits one)
-                base64-secret: YTJlOTc0OWEzYzJhMDc4Y2IxN2FlZjg3MGNlZDRmNDk4MjZjMmRkYzNmYzkyMTkwZjJlNTE2ZTg0NjQ0N2Q2M2IyZjYyNWIxM2I0MDVjZmY4NDYxNmQyZDVmOWY1YmZmZTA5ZTI5YmI0YjE4MDgzZTYzYTk1NGFhMTBhZDg1OWY=
+                base64-secret: N2Q4NTY4MDg2ZWI3YTU4NThmNTVmZjRiYjdjNzExN2EyNDJiMDE4Nzg0NThiMmQ2NWJmMjI0NGFhOWQ1MDMxZmMzZDI2NzQ2ODg0MTVkMGQ5NGQ4NThlNjU1NTc1MzcxMjc3MTZhNmYzZWI3ZjdmZWQxNmQ3NzZiY2RiZTMwZWM=
                 # Token is valid 24 hours
                 token-validity-in-seconds: 86400
                 token-validity-in-seconds-for-remember-me: 2592000
     mail: # specific JHipster mail property, for standard properties see MailProperties
         from: gateway@localhost
         base-url: http://127.0.0.1:8080
-    metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
-        jmx:
-            enabled: true
-        prometheus:
-            enabled: false #expose metrics via prometheus
-        logs: # Reports Dropwizard metrics in the logs
+    metrics:
+        logs: # Reports metrics in the logs
             enabled: false
             report-frequency: 60 # in seconds
     logging:

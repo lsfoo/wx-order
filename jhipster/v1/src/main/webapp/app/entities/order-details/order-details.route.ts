@@ -16,7 +16,7 @@ import { IOrderDetails } from 'app/shared/model/order-details.model';
 export class OrderDetailsResolve implements Resolve<IOrderDetails> {
     constructor(private service: OrderDetailsService) {}
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<OrderDetails> {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<IOrderDetails> {
         const id = route.params['id'] ? route.params['id'] : null;
         if (id) {
             return this.service.find(id).pipe(
@@ -30,7 +30,7 @@ export class OrderDetailsResolve implements Resolve<IOrderDetails> {
 
 export const orderDetailsRoute: Routes = [
     {
-        path: 'order-details',
+        path: '',
         component: OrderDetailsComponent,
         data: {
             authorities: ['ROLE_USER'],
@@ -39,7 +39,7 @@ export const orderDetailsRoute: Routes = [
         canActivate: [UserRouteAccessService]
     },
     {
-        path: 'order-details/:id/view',
+        path: ':id/view',
         component: OrderDetailsDetailComponent,
         resolve: {
             orderDetails: OrderDetailsResolve
@@ -51,7 +51,7 @@ export const orderDetailsRoute: Routes = [
         canActivate: [UserRouteAccessService]
     },
     {
-        path: 'order-details/new',
+        path: 'new',
         component: OrderDetailsUpdateComponent,
         resolve: {
             orderDetails: OrderDetailsResolve
@@ -63,7 +63,7 @@ export const orderDetailsRoute: Routes = [
         canActivate: [UserRouteAccessService]
     },
     {
-        path: 'order-details/:id/edit',
+        path: ':id/edit',
         component: OrderDetailsUpdateComponent,
         resolve: {
             orderDetails: OrderDetailsResolve
@@ -78,7 +78,7 @@ export const orderDetailsRoute: Routes = [
 
 export const orderDetailsPopupRoute: Routes = [
     {
-        path: 'order-details/:id/delete',
+        path: ':id/delete',
         component: OrderDetailsDeletePopupComponent,
         resolve: {
             orderDetails: OrderDetailsResolve

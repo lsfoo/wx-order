@@ -16,7 +16,7 @@ import { ISpecs } from 'app/shared/model/specs.model';
 export class SpecsResolve implements Resolve<ISpecs> {
     constructor(private service: SpecsService) {}
 
-    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<Specs> {
+    resolve(route: ActivatedRouteSnapshot, state: RouterStateSnapshot): Observable<ISpecs> {
         const id = route.params['id'] ? route.params['id'] : null;
         if (id) {
             return this.service.find(id).pipe(
@@ -30,7 +30,7 @@ export class SpecsResolve implements Resolve<ISpecs> {
 
 export const specsRoute: Routes = [
     {
-        path: 'specs',
+        path: '',
         component: SpecsComponent,
         data: {
             authorities: ['ROLE_USER'],
@@ -39,7 +39,7 @@ export const specsRoute: Routes = [
         canActivate: [UserRouteAccessService]
     },
     {
-        path: 'specs/:id/view',
+        path: ':id/view',
         component: SpecsDetailComponent,
         resolve: {
             specs: SpecsResolve
@@ -51,7 +51,7 @@ export const specsRoute: Routes = [
         canActivate: [UserRouteAccessService]
     },
     {
-        path: 'specs/new',
+        path: 'new',
         component: SpecsUpdateComponent,
         resolve: {
             specs: SpecsResolve
@@ -63,7 +63,7 @@ export const specsRoute: Routes = [
         canActivate: [UserRouteAccessService]
     },
     {
-        path: 'specs/:id/edit',
+        path: ':id/edit',
         component: SpecsUpdateComponent,
         resolve: {
             specs: SpecsResolve
@@ -78,7 +78,7 @@ export const specsRoute: Routes = [
 
 export const specsPopupRoute: Routes = [
     {
-        path: 'specs/:id/delete',
+        path: ':id/delete',
         component: SpecsDeletePopupComponent,
         resolve: {
             specs: SpecsResolve

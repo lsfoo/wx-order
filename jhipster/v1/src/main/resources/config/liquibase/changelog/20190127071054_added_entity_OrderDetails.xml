@@ -7,7 +7,7 @@
                         http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
     <property name="now" value="now()" dbms="h2"/>
-
+    
     <property name="now" value="now()" dbms="mysql"/>
     <property name="autoIncrement" value="true"/>
 
@@ -15,19 +15,21 @@
     <property name="floatType" value="float" dbms="mysql, oracle, mssql"/>
 
     <!--
-        Added the entity Shop.
+        Added the entity OrderDetails.
     -->
-    <changeSet id="20190126153432-1" author="jhipster">
-        <createTable tableName="shop" remarks="The Entity entity. @author A true hipster">
+    <changeSet id="20190127071054-1" author="jhipster">
+        <createTable tableName="order_details" remarks="The Entity entity. @author A true hipster">
             <column name="id" type="bigint" autoIncrement="${autoIncrement}">
                 <constraints primaryKey="true" nullable="false"/>
+            </column>            <column name="product_id" type="bigint">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_order_details_product_id" />
+            </column>            <column name="specs_id" type="bigint">
+                <constraints unique="true" nullable="true" uniqueConstraintName="ux_order_details_specs_id" />
             </column>
-            <column name="name" type="varchar(255)" remarks="fieldName">
+            <column name="shop_order_id" type="bigint">
                 <constraints nullable="true" />
             </column>
-            <column name="user_id" type="bigint">
-                <constraints unique="true" nullable="true" uniqueConstraintName="ux_shop_user_id" />
-            </column>
+
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here, do not remove-->
         </createTable>
         

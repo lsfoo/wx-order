@@ -30,7 +30,7 @@
             "otherEntityField": "id"
         }
     ],
-    "changelogDate": "20190126153431",
+    "changelogDate": "20190127071051",
     "javadoc": "The Entity entity.\n@author A true hipster",
     "entityTableName": "specs",
     "dto": "no",

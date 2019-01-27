@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { IOrderDetails } from 'app/shared/model/order-details.model';
@@ -37,19 +38,26 @@ export class OrderDetailsComponent implements OnInit, OnDestroy {
                 .search({
                     query: this.currentSearch
                 })
-                .subscribe(
-                    (res: HttpResponse<IOrderDetails[]>) => (this.orderDetails = res.body),
-                    (res: HttpErrorResponse) => this.onError(res.message)
-                );
+                .pipe(
+                    filter((res: HttpResponse<IOrderDetails[]>) => res.ok),
+                    map((res: HttpResponse<IOrderDetails[]>) => res.body)
+                )
+                .subscribe((res: IOrderDetails[]) => (this.orderDetails = res), (res: HttpErrorResponse) => this.onError(res.message));
             return;
         }
-        this.orderDetailsService.query().subscribe(
-            (res: HttpResponse<IOrderDetails[]>) => {
-                this.orderDetails = res.body;
-                this.currentSearch = '';
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
+        this.orderDetailsService
+            .query()
+            .pipe(
+                filter((res: HttpResponse<IOrderDetails[]>) => res.ok),
+                map((res: HttpResponse<IOrderDetails[]>) => res.body)
+            )
+            .subscribe(
+                (res: IOrderDetails[]) => {
+                    this.orderDetails = res;
+                    this.currentSearch = '';
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
     }
 
     search(query) {

@@ -1,6 +1,4 @@
 package com.lsfoo.wx.gateway.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import com.lsfoo.wx.gateway.domain.Shop;
 import com.lsfoo.wx.gateway.repository.ShopRepository;
 import com.lsfoo.wx.gateway.repository.search.ShopSearchRepository;
@@ -50,7 +48,6 @@ public class ShopResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/shops")
-    @Timed
     public ResponseEntity<Shop> createShop(@RequestBody Shop shop) throws URISyntaxException {
         log.debug("REST request to save Shop : {}", shop);
         if (shop.getId() != null) {
@@ -73,7 +70,6 @@ public class ShopResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/shops")
-    @Timed
     public ResponseEntity<Shop> updateShop(@RequestBody Shop shop) throws URISyntaxException {
         log.debug("REST request to update Shop : {}", shop);
         if (shop.getId() == null) {
@@ -92,7 +88,6 @@ public class ShopResource {
      * @return the ResponseEntity with status 200 (OK) and the list of shops in body
      */
     @GetMapping("/shops")
-    @Timed
     public List<Shop> getAllShops() {
         log.debug("REST request to get all Shops");
         return shopRepository.findAll();
@@ -105,7 +100,6 @@ public class ShopResource {
      * @return the ResponseEntity with status 200 (OK) and with body the shop, or with status 404 (Not Found)
      */
     @GetMapping("/shops/{id}")
-    @Timed
     public ResponseEntity<Shop> getShop(@PathVariable Long id) {
         log.debug("REST request to get Shop : {}", id);
         Optional<Shop> shop = shopRepository.findById(id);
@@ -119,10 +113,8 @@ public class ShopResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/shops/{id}")
-    @Timed
     public ResponseEntity<Void> deleteShop(@PathVariable Long id) {
         log.debug("REST request to delete Shop : {}", id);
-
         shopRepository.deleteById(id);
         shopSearchRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
@@ -136,7 +128,6 @@ public class ShopResource {
      * @return the result of the search
      */
     @GetMapping("/_search/shops")
-    @Timed
     public List<Shop> searchShops(@RequestParam String query) {
         log.debug("REST request to search Shops for query {}", query);
         return StreamSupport

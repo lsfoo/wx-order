@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 import { JhiAlertService } from 'ng-jhipster';
-
 import { IProduct } from 'app/shared/model/product.model';
 import { ProductService } from './product.service';
 import { IShop } from 'app/shared/model/shop.model';
@@ -41,24 +41,27 @@ export class ProductUpdateComponent implements OnInit {
         this.activatedRoute.data.subscribe(({ product }) => {
             this.product = product;
         });
-        this.shopService.query().subscribe(
-            (res: HttpResponse<IShop[]>) => {
-                this.shops = res.body;
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
-        this.orderDetailsService.query().subscribe(
-            (res: HttpResponse<IOrderDetails[]>) => {
-                this.orderdetails = res.body;
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
-        this.categoryService.query().subscribe(
-            (res: HttpResponse<ICategory[]>) => {
-                this.categories = res.body;
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
+        this.shopService
+            .query()
+            .pipe(
+                filter((mayBeOk: HttpResponse<IShop[]>) => mayBeOk.ok),
+                map((response: HttpResponse<IShop[]>) => response.body)
+            )
+            .subscribe((res: IShop[]) => (this.shops = res), (res: HttpErrorResponse) => this.onError(res.message));
+        this.orderDetailsService
+            .query()
+            .pipe(
+                filter((mayBeOk: HttpResponse<IOrderDetails[]>) => mayBeOk.ok),
+                map((response: HttpResponse<IOrderDetails[]>) => response.body)
+            )
+            .subscribe((res: IOrderDetails[]) => (this.orderdetails = res), (res: HttpErrorResponse) => this.onError(res.message));
+        this.categoryService
+            .query()
+            .pipe(
+                filter((mayBeOk: HttpResponse<ICategory[]>) => mayBeOk.ok),
+                map((response: HttpResponse<ICategory[]>) => response.body)
+            )
+            .subscribe((res: ICategory[]) => (this.categories = res), (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     previousState() {

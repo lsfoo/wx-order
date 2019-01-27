@@ -1,6 +1,6 @@
-import { IProduct } from 'app/shared/model//product.model';
-import { ISpecs } from 'app/shared/model//specs.model';
-import { IShopOrder } from 'app/shared/model//shop-order.model';
+import { IProduct } from 'app/shared/model/product.model';
+import { ISpecs } from 'app/shared/model/specs.model';
+import { IShopOrder } from 'app/shared/model/shop-order.model';
 
 export interface IOrderDetails {
     id?: number;

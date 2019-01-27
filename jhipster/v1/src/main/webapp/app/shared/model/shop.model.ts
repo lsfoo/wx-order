@@ -1,7 +1,7 @@
 import { IUser } from 'app/core/user/user.model';
-import { IProduct } from 'app/shared/model//product.model';
-import { ICategory } from 'app/shared/model//category.model';
-import { IShopOrder } from 'app/shared/model//shop-order.model';
+import { IProduct } from 'app/shared/model/product.model';
+import { ICategory } from 'app/shared/model/category.model';
+import { IShopOrder } from 'app/shared/model/shop-order.model';
 
 export interface IShop {
     id?: number;

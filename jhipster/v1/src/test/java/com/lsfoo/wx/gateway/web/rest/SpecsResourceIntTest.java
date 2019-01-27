@@ -262,7 +262,7 @@ public class SpecsResourceIntTest {
 
         int databaseSizeBeforeDelete = specsRepository.findAll().size();
 
-        // Get the specs
+        // Delete the specs
         restSpecsMockMvc.perform(delete("/api/specs/{id}", specs.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());

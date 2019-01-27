@@ -253,7 +253,7 @@ public class ShopOrderResourceIntTest {
 
         int databaseSizeBeforeDelete = shopOrderRepository.findAll().size();
 
-        // Get the shopOrder
+        // Delete the shopOrder
         restShopOrderMockMvc.perform(delete("/api/shop-orders/{id}", shopOrder.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());

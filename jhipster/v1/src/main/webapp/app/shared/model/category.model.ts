@@ -1,5 +1,5 @@
-import { IProduct } from 'app/shared/model//product.model';
-import { IShop } from 'app/shared/model//shop.model';
+import { IProduct } from 'app/shared/model/product.model';
+import { IShop } from 'app/shared/model/shop.model';
 
 export interface ICategory {
     id?: number;

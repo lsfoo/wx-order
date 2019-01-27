@@ -234,7 +234,7 @@ public class OrderDetailsResourceIntTest {
 
         int databaseSizeBeforeDelete = orderDetailsRepository.findAll().size();
 
-        // Get the orderDetails
+        // Delete the orderDetails
         restOrderDetailsMockMvc.perform(delete("/api/order-details/{id}", orderDetails.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());

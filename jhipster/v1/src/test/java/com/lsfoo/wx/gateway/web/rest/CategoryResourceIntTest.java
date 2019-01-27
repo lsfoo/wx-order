@@ -253,7 +253,7 @@ public class CategoryResourceIntTest {
 
         int databaseSizeBeforeDelete = categoryRepository.findAll().size();
 
-        // Get the category
+        // Delete the category
         restCategoryMockMvc.perform(delete("/api/categories/{id}", category.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());

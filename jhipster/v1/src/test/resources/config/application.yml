@@ -42,7 +42,7 @@ spring:
             hibernate.connection.provider_disables_autocommit: true
             hibernate.cache.use_second_level_cache: false
             hibernate.cache.use_query_cache: false
-            hibernate.generate_statistics: true
+            hibernate.generate_statistics: false
             hibernate.hbm2ddl.auto: validate
             hibernate.jdbc.time_zone: UTC
     data:
@@ -92,12 +92,11 @@ jhipster:
         authentication:
             jwt:
                 # This token must be encoded using Base64 (you can type `echo 'secret-key'|base64` on your command line)
-                base64-secret: YTJlOTc0OWEzYzJhMDc4Y2IxN2FlZjg3MGNlZDRmNDk4MjZjMmRkYzNmYzkyMTkwZjJlNTE2ZTg0NjQ0N2Q2M2IyZjYyNWIxM2I0MDVjZmY4NDYxNmQyZDVmOWY1YmZmZTA5ZTI5YmI0YjE4MDgzZTYzYTk1NGFhMTBhZDg1OWY=
+                base64-secret: N2Q4NTY4MDg2ZWI3YTU4NThmNTVmZjRiYjdjNzExN2EyNDJiMDE4Nzg0NThiMmQ2NWJmMjI0NGFhOWQ1MDMxZmMzZDI2NzQ2ODg0MTVkMGQ5NGQ4NThlNjU1NTc1MzcxMjc3MTZhNmYzZWI3ZjdmZWQxNmQ3NzZiY2RiZTMwZWM=
                 # Token is valid 24 hours
                 token-validity-in-seconds: 86400
-    metrics: # DropWizard Metrics configuration, used by MetricsConfiguration
-        jmx.enabled: true
-        logs: # Reports Dropwizard metrics in the logs
+    metrics:
+        logs: # Reports metrics in the logs
             enabled: true
             report-frequency: 60 # in seconds
 

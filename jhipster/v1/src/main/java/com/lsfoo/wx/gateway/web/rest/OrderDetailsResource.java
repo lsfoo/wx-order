@@ -1,6 +1,4 @@
 package com.lsfoo.wx.gateway.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import com.lsfoo.wx.gateway.domain.OrderDetails;
 import com.lsfoo.wx.gateway.repository.OrderDetailsRepository;
 import com.lsfoo.wx.gateway.repository.search.OrderDetailsSearchRepository;
@@ -50,7 +48,6 @@ public class OrderDetailsResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/order-details")
-    @Timed
     public ResponseEntity<OrderDetails> createOrderDetails(@RequestBody OrderDetails orderDetails) throws URISyntaxException {
         log.debug("REST request to save OrderDetails : {}", orderDetails);
         if (orderDetails.getId() != null) {
@@ -73,7 +70,6 @@ public class OrderDetailsResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/order-details")
-    @Timed
     public ResponseEntity<OrderDetails> updateOrderDetails(@RequestBody OrderDetails orderDetails) throws URISyntaxException {
         log.debug("REST request to update OrderDetails : {}", orderDetails);
         if (orderDetails.getId() == null) {
@@ -92,7 +88,6 @@ public class OrderDetailsResource {
      * @return the ResponseEntity with status 200 (OK) and the list of orderDetails in body
      */
     @GetMapping("/order-details")
-    @Timed
     public List<OrderDetails> getAllOrderDetails() {
         log.debug("REST request to get all OrderDetails");
         return orderDetailsRepository.findAll();
@@ -105,7 +100,6 @@ public class OrderDetailsResource {
      * @return the ResponseEntity with status 200 (OK) and with body the orderDetails, or with status 404 (Not Found)
      */
     @GetMapping("/order-details/{id}")
-    @Timed
     public ResponseEntity<OrderDetails> getOrderDetails(@PathVariable Long id) {
         log.debug("REST request to get OrderDetails : {}", id);
         Optional<OrderDetails> orderDetails = orderDetailsRepository.findById(id);
@@ -119,10 +113,8 @@ public class OrderDetailsResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/order-details/{id}")
-    @Timed
     public ResponseEntity<Void> deleteOrderDetails(@PathVariable Long id) {
         log.debug("REST request to delete OrderDetails : {}", id);
-
         orderDetailsRepository.deleteById(id);
         orderDetailsSearchRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
@@ -136,7 +128,6 @@ public class OrderDetailsResource {
      * @return the result of the search
      */
     @GetMapping("/_search/order-details")
-    @Timed
     public List<OrderDetails> searchOrderDetails(@RequestParam String query) {
         log.debug("REST request to search OrderDetails for query {}", query);
         return StreamSupport

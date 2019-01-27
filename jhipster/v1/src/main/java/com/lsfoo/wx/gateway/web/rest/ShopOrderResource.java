@@ -1,6 +1,4 @@
 package com.lsfoo.wx.gateway.web.rest;
-
-import com.codahale.metrics.annotation.Timed;
 import com.lsfoo.wx.gateway.domain.ShopOrder;
 import com.lsfoo.wx.gateway.repository.ShopOrderRepository;
 import com.lsfoo.wx.gateway.repository.search.ShopOrderSearchRepository;
@@ -50,7 +48,6 @@ public class ShopOrderResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PostMapping("/shop-orders")
-    @Timed
     public ResponseEntity<ShopOrder> createShopOrder(@RequestBody ShopOrder shopOrder) throws URISyntaxException {
         log.debug("REST request to save ShopOrder : {}", shopOrder);
         if (shopOrder.getId() != null) {
@@ -73,7 +70,6 @@ public class ShopOrderResource {
      * @throws URISyntaxException if the Location URI syntax is incorrect
      */
     @PutMapping("/shop-orders")
-    @Timed
     public ResponseEntity<ShopOrder> updateShopOrder(@RequestBody ShopOrder shopOrder) throws URISyntaxException {
         log.debug("REST request to update ShopOrder : {}", shopOrder);
         if (shopOrder.getId() == null) {
@@ -92,7 +88,6 @@ public class ShopOrderResource {
      * @return the ResponseEntity with status 200 (OK) and the list of shopOrders in body
      */
     @GetMapping("/shop-orders")
-    @Timed
     public List<ShopOrder> getAllShopOrders() {
         log.debug("REST request to get all ShopOrders");
         return shopOrderRepository.findAll();
@@ -105,7 +100,6 @@ public class ShopOrderResource {
      * @return the ResponseEntity with status 200 (OK) and with body the shopOrder, or with status 404 (Not Found)
      */
     @GetMapping("/shop-orders/{id}")
-    @Timed
     public ResponseEntity<ShopOrder> getShopOrder(@PathVariable Long id) {
         log.debug("REST request to get ShopOrder : {}", id);
         Optional<ShopOrder> shopOrder = shopOrderRepository.findById(id);
@@ -119,10 +113,8 @@ public class ShopOrderResource {
      * @return the ResponseEntity with status 200 (OK)
      */
     @DeleteMapping("/shop-orders/{id}")
-    @Timed
     public ResponseEntity<Void> deleteShopOrder(@PathVariable Long id) {
         log.debug("REST request to delete ShopOrder : {}", id);
-
         shopOrderRepository.deleteById(id);
         shopOrderSearchRepository.deleteById(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert(ENTITY_NAME, id.toString())).build();
@@ -136,7 +128,6 @@ public class ShopOrderResource {
      * @return the result of the search
      */
     @GetMapping("/_search/shop-orders")
-    @Timed
     public List<ShopOrder> searchShopOrders(@RequestParam String query) {
         log.debug("REST request to search ShopOrders for query {}", query);
         return StreamSupport

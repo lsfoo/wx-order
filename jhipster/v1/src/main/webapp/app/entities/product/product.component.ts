@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { IProduct } from 'app/shared/model/product.model';
@@ -37,19 +38,26 @@ export class ProductComponent implements OnInit, OnDestroy {
                 .search({
                     query: this.currentSearch
                 })
-                .subscribe(
-                    (res: HttpResponse<IProduct[]>) => (this.products = res.body),
-                    (res: HttpErrorResponse) => this.onError(res.message)
-                );
+                .pipe(
+                    filter((res: HttpResponse<IProduct[]>) => res.ok),
+                    map((res: HttpResponse<IProduct[]>) => res.body)
+                )
+                .subscribe((res: IProduct[]) => (this.products = res), (res: HttpErrorResponse) => this.onError(res.message));
             return;
         }
-        this.productService.query().subscribe(
-            (res: HttpResponse<IProduct[]>) => {
-                this.products = res.body;
-                this.currentSearch = '';
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
+        this.productService
+            .query()
+            .pipe(
+                filter((res: HttpResponse<IProduct[]>) => res.ok),
+                map((res: HttpResponse<IProduct[]>) => res.body)
+            )
+            .subscribe(
+                (res: IProduct[]) => {
+                    this.products = res;
+                    this.currentSearch = '';
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
     }
 
     search(query) {

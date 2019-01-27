@@ -262,7 +262,7 @@ public class ProductResourceIntTest {
 
         int databaseSizeBeforeDelete = productRepository.findAll().size();
 
-        // Get the product
+        // Delete the product
         restProductMockMvc.perform(delete("/api/products/{id}", product.getId())
             .accept(TestUtil.APPLICATION_JSON_UTF8))
             .andExpect(status().isOk());

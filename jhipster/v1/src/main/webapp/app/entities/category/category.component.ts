@@ -2,6 +2,7 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 import { JhiEventManager, JhiAlertService } from 'ng-jhipster';
 
 import { ICategory } from 'app/shared/model/category.model';
@@ -37,19 +38,26 @@ export class CategoryComponent implements OnInit, OnDestroy {
                 .search({
                     query: this.currentSearch
                 })
-                .subscribe(
-                    (res: HttpResponse<ICategory[]>) => (this.categories = res.body),
-                    (res: HttpErrorResponse) => this.onError(res.message)
-                );
+                .pipe(
+                    filter((res: HttpResponse<ICategory[]>) => res.ok),
+                    map((res: HttpResponse<ICategory[]>) => res.body)
+                )
+                .subscribe((res: ICategory[]) => (this.categories = res), (res: HttpErrorResponse) => this.onError(res.message));
             return;
         }
-        this.categoryService.query().subscribe(
-            (res: HttpResponse<ICategory[]>) => {
-                this.categories = res.body;
-                this.currentSearch = '';
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
+        this.categoryService
+            .query()
+            .pipe(
+                filter((res: HttpResponse<ICategory[]>) => res.ok),
+                map((res: HttpResponse<ICategory[]>) => res.body)
+            )
+            .subscribe(
+                (res: ICategory[]) => {
+                    this.categories = res;
+                    this.currentSearch = '';
+                },
+                (res: HttpErrorResponse) => this.onError(res.message)
+            );
     }
 
     search(query) {

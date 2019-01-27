@@ -2,8 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { HttpResponse, HttpErrorResponse } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { filter, map } from 'rxjs/operators';
 import { JhiAlertService } from 'ng-jhipster';
-
 import { ISpecs } from 'app/shared/model/specs.model';
 import { SpecsService } from './specs.service';
 import { IOrderDetails } from 'app/shared/model/order-details.model';
@@ -36,18 +36,20 @@ export class SpecsUpdateComponent implements OnInit {
         this.activatedRoute.data.subscribe(({ specs }) => {
             this.specs = specs;
         });
-        this.orderDetailsService.query().subscribe(
-            (res: HttpResponse<IOrderDetails[]>) => {
-                this.orderdetails = res.body;
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
-        this.productService.query().subscribe(
-            (res: HttpResponse<IProduct[]>) => {
-                this.products = res.body;
-            },
-            (res: HttpErrorResponse) => this.onError(res.message)
-        );
+        this.orderDetailsService
+            .query()
+            .pipe(
+                filter((mayBeOk: HttpResponse<IOrderDetails[]>) => mayBeOk.ok),
+                map((response: HttpResponse<IOrderDetails[]>) => response.body)
+            )
+            .subscribe((res: IOrderDetails[]) => (this.orderdetails = res), (res: HttpErrorResponse) => this.onError(res.message));
+        this.productService
+            .query()
+            .pipe(
+                filter((mayBeOk: HttpResponse<IProduct[]>) => mayBeOk.ok),
+                map((response: HttpResponse<IProduct[]>) => response.body)
+            )
+            .subscribe((res: IProduct[]) => (this.products = res), (res: HttpErrorResponse) => this.onError(res.message));
     }
 
     previousState() {
