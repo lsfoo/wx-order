@@ -1,0 +1,45 @@
+{
+    "name": "Specs",
+    "fields": [
+        {
+            "fieldName": "name",
+            "javadoc": "fieldName",
+            "fieldType": "String"
+        },
+        {
+            "fieldName": "price",
+            "fieldType": "Double"
+        },
+        {
+            "fieldName": "stock",
+            "fieldType": "Integer"
+        }
+    ],
+    "relationships": [
+        {
+            "relationshipType": "one-to-one",
+            "relationshipName": "orderDetails",
+            "otherEntityName": "orderDetails",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "specs"
+        },
+        {
+            "relationshipType": "many-to-one",
+            "relationshipName": "product",
+            "otherEntityName": "product",
+            "otherEntityField": "id"
+        }
+    ],
+    "changelogDate": "20190127032227",
+    "javadoc": "The Entity entity.\n@author A true hipster",
+    "entityTableName": "specs",
+    "dto": "no",
+    "pagination": "no",
+    "service": "no",
+    "jpaMetamodelFiltering": false,
+    "fluentMethods": true,
+    "clientRootFolder": "",
+    "applications": [
+        "gateway"
+    ]
+}
