@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core'
+import { CategoryResourceService } from '../../openapi/api/categoryResource.service'
 
 @Component({
   selector: 'app-list',
@@ -6,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-  constructor() {}
+  constructor(public categoryResourceService: CategoryResourceService) {}
 
-  ngOnInit() {}
+  ngOnInit() {
+    this.categoryResourceService.getAllCategoriesUsingGET().subscribe(res => {
+      console.log(res)
+    })
+  }
 }
