@@ -8,7 +8,15 @@ import 'hammerjs'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ListComponent } from './list/list.component'
 import { HttpClientModule } from '@angular/common/http'
-import { GatewaySharedModule } from './shared';
+import { ApiModule, Configuration, ConfigurationParameters } from 'shared'
+export function apiConfigFactory(): Configuration {
+  const params: ConfigurationParameters = {
+    // set configuration parameters here.
+    accessToken:
+      'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTU0ODc1MjgyOH0.36-HTwA5wPENscbS6HAlC_uMYtNQt4al75nDHmwLAr4fXRlu6twtGQHKeVw69IP31mIE33kj9ZUhIwCbDN7evg'
+  }
+  return new Configuration(params)
+}
 
 @NgModule({
   declarations: [AppComponent, ListComponent],
@@ -18,7 +26,7 @@ import { GatewaySharedModule } from './shared';
     BrowserAnimationsModule,
     FlexLayoutModule,
     HttpClientModule,
-    GatewaySharedModule
+    ApiModule
   ],
   providers: [],
   bootstrap: [AppComponent]
