@@ -7,8 +7,8 @@ import { AppComponent } from './app.component'
 import 'hammerjs'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ListComponent } from './list/list.component'
-import { ApiModule } from '../shared/api.module'
 import { HttpClientModule } from '@angular/common/http'
+import { GatewaySharedModule } from './shared';
 
 @NgModule({
   declarations: [AppComponent, ListComponent],
@@ -17,8 +17,8 @@ import { HttpClientModule } from '@angular/common/http'
     AppRoutingModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
-    ApiModule,
-    HttpClientModule
+    HttpClientModule,
+    GatewaySharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]

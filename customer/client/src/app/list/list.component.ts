@@ -1,17 +1,16 @@
-import { ProductResourceService } from './../../shared/api/productResource.service'
 import { Component, OnInit } from '@angular/core'
-import { CategoryResourceService, Category, Product } from 'src/shared'
-
+import { ICategory } from '../shared/model/category.model'
+import { IProduct } from '../shared/model/product.model'
 @Component({
   selector: 'app-list',
   templateUrl: './list.component.html',
   styleUrls: ['./list.component.scss']
 })
 export class ListComponent implements OnInit {
-  categories: Array<Category> = []
-  products: Array<Product> = []
+  categories: ICategory[]
+  products: IProduct[]
   constructor(
-    private categoryResourceService: CategoryResourceService,
+    private categoryService: CategoryService,
     private productResourceService: ProductResourceService
   ) {
     this.categoryResourceService.getAllCategoriesUsingGET().subscribe(res => {

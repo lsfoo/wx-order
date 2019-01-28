@@ -18,67 +18,113 @@ application {
 
 }
 /**
- * The Entity entity.
+ * The 商品分类.
  * @author A true hipster
  */
 entity Category {
-  /** fieldName */
   name String,
   sort Integer
 }
 /**
- * The Entity entity.
+ * The 商品.
  * @author A true hipster
  */
 entity Product {
-  /** fieldName */
-  name String,
-  thumbnail String,
+  name String
+  thumbnail String
   description String
 }
 /**
- * The Entity entity.
+ * The 规格.
  * @author A true hipster
  */
 entity Specs {
-  /** fieldName */
   name String,
   price Double,
   stock Integer
 }
 /**
- * The Entity entity.
+ * The 商店.
  * @author A true hipster
  */
-entity Shop {
-  /** fieldName */
+entity Store {
   name String,
   description String
 }
 /**
- * The Entity entity.
+ * The 订单.
  * @author A true hipster
  */
-entity ShopOrder {
-  /** fieldName */
-  orderNo String,
+entity OrderForm {
   totalMoney Double
 }
 /**
- * The Entity entity.
+ * The 订单详情.
  * @author A true hipster
  */
 entity OrderDetails{
+  count Integer
+}
+/**
+ * The 桌号.
+ * @author A true hipster
+ */
+entity Desk {
+  /** fieldName */
+  no Integer
+  name String
+}
+/**
+ * The 顾客.
+ * @author A true hipster
+ */
+entity Customer {
+  /** 微信unionid */
+  wxUniond String
+  name String
+  telephone String
+}
+/**
+ * The 会员.
+ * @author A true hipster
+ */
+entity Vip {
+  /** 余额 */
+  balance Double
+  /** 积分 */
+  integral Integer
+}
+/**
+ * The 单位.
+ * @author A true hipster
+ */
+entity Unit {
+  name String
 }
 /**
  * Many to one relationship.
  */
 relationship ManyToOne {
-  Specs{Product(name)} to Product , Product{category(name)} to Category , Product{shop(name)} to Shop , Category{shop(name)} to Shop , ShopOrder{shop(name)} to Shop , OrderDetails{order(orderNo)} to ShopOrder
+  Specs{Product(name)} to Product{specs}
+  Specs{unit(name)} to Unit{specs}
+  Product{category(name)} to Category {product(name)}
+  Product{unit(name)} to Unit{product(name)}
+  Category {store(name)} to Store{category}
+  Vip{shore(name)} to Store{vip}
+  Product{store(name)} to Store{product}
+  OrderForm{store(name)} to Store {orderForm}
+  OrderDetails{orderCart(orderNo)} to OrderForm{orderDetails}
+  Desk{store(name)} to Store{desk(name)}
 }
 /**
  * One to one relationship.
  */
 relationship OneToOne {
-  Shop to User , OrderDetails to Product , OrderDetails to Specs
+  Vip{custom(name)} to Customer{vip}
+  Customer{user(login)} to User
+  Store{user(login)} to User 
+  OrderForm{Customer(name)} to Customer{orderForm}
+  OrderForm{desk(no)} to Desk{orderForm}
+  OrderDetails{product} to Product{orderDetails}
+  OrderDetails{specs} to Specs{orderDetails}
 }

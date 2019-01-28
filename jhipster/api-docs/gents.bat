@@ -1,1 +1,0 @@
-openapi-generator generate -i .\v1.json -g typescript-angular -o ..\..\customer\client\src\shared\
