@@ -105,30 +105,26 @@ entity Unit {
  * Many to one relationship.
  */
 relationship ManyToOne {
-  Specs{unit(name)} to Unit{specs}
-  Product{category(name)} to Category {product(name)}
   Category {store(name)} to Store{category}
-  Vip{shore(name)} to Store{vip}
-  Product{store(name)} to Store{product}
-  OrderForm{store(name)} to Store {orderForm}
-  OrderDetails{orderCart(orderNo)} to OrderForm{orderDetails}
   Desk{store(name)} to Store{desk(name)}
-}
-/**
- * One to many relationship.
- */
-relationship OneToMany {
-  Product{specs} to Specs{product}
+  OrderDetails{orderCart(orderNo)} to OrderForm{orderDetails}
+  OrderForm{store(name)} to Store {orderForm}
+  Product{category(name)} to Category {product(name)}
+  Product{store(name)} to Store{product}
+  Product{unit(name)} to Unit{product(name)}
+  Specs{Product(name)} to Product{specs}
+  Specs{unit(name)} to Unit{specs}
+  Vip{shore(name)} to Store{vip}
 }
 /**
  * One to one relationship.
  */
 relationship OneToOne {
-  Vip{custom(name)} to Customer{vip}
   Customer{user(login)} to User
-  Store{user(login)} to User 
-  OrderForm{Customer(name)} to Customer{orderForm}
-  OrderForm{desk(no)} to Desk{orderForm}
   OrderDetails{product} to Product{orderDetails}
   OrderDetails{specs} to Specs{orderDetails}
+  OrderForm{Customer(name)} to Customer{orderForm}
+  OrderForm{desk(no)} to Desk{orderForm}
+  Store{user(login)} to User 
+  Vip{custom(name)} to Customer{vip}
 }
