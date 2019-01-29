@@ -32,9 +32,16 @@
 
     </div>
   </div>
-  <div fxFlex="41%">
-    <div fxLayout="column" fxLayoutAlign="center stretch" fxLayoutGap="10px">
-      <button type="button" class="btn btn-outline-primary" *ngFor="let item of categories">{{item.name}}</button>
+  <div fxFlex="41%" style="height: 100%">
+    <div fxLayout="column" fxLayoutAlign="center stretch" fxLayoutGap="0px" style="height: 100%">
+      <div fxFlex="59%">
+        <button type="button" class="btn btn-outline-primary" *ngFor="let item of categories">{{item.name}}</button>
+
+      </div>
+      <div fxFlex="41%">
+        <button type="button" class="btn btn-outline-primary" (click)="openCartModal()">下单</button>
+      </div>
     </div>
   </div>
 </div>
+<app-cart *ngIf="showCart" class="cart-modal" (hide_emitter)="closeCartModal()"></app-cart>

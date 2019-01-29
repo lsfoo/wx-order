@@ -2,33 +2,48 @@ import { BrowserModule } from '@angular/platform-browser'
 import { NgModule } from '@angular/core'
 import { FlexLayoutModule } from '@angular/flex-layout'
 
+import { NgxWebstorageModule } from 'ngx-webstorage'
+
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
 import 'hammerjs'
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations'
 import { ListComponent } from './list/list.component'
-import { HttpClientModule } from '@angular/common/http'
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http'
 import { ApiModule, Configuration, ConfigurationParameters } from 'shared'
+import { AuthInterceptor } from './blocks/interceptor/auth.interceptor'
+import { CartComponent } from './cart/cart.component'
+import { AuthExpiredInterceptor } from './blocks/interceptor/auth-expired.interceptor'
 export function apiConfigFactory(): Configuration {
   const params: ConfigurationParameters = {
     // set configuration parameters here.
-    accessToken:
-      'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJhZG1pbiIsImF1dGgiOiJST0xFX0FETUlOLFJPTEVfVVNFUiIsImV4cCI6MTU0ODc1MjgyOH0.36-HTwA5wPENscbS6HAlC_uMYtNQt4al75nDHmwLAr4fXRlu6twtGQHKeVw69IP31mIE33kj9ZUhIwCbDN7evg'
   }
   return new Configuration(params)
 }
 
 @NgModule({
-  declarations: [AppComponent, ListComponent],
+  declarations: [AppComponent, ListComponent, CartComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     FlexLayoutModule,
     HttpClientModule,
-    ApiModule
+    ApiModule.forRoot(apiConfigFactory),
+    NgxWebstorageModule.forRoot()
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptor,
+      multi: true
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthExpiredInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}
